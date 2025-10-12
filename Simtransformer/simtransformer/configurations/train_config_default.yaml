@@ -1,0 +1,51 @@
+batch_size: 64
+lr_scheduler: cosine
+cosine_scheduler_config:
+  lr_decay_steps: 100000000.0
+  min_lr: 1.0e-05
+  warmup_steps: 1000
+StepLR_scheduler_config:
+  gamma: 0.1
+  step_size: 1000
+
+optimizer: AdamW
+AdamW_optimizer_config:
+  betas: [0.9, 0.999]
+  eps: 1.0e-08
+  weight_decay: 0.01
+  lr: 0.001
+Adam_optimizer_config:
+  betas: [0.9, 0.999]
+  eps: 1.0e-08
+  weight_decay: 0.0 # there is some issue with the original weight decay. Should use AdamW instead
+  lr: 0.0001
+SGD_optimizer_config:
+  momentum: 0.9
+  nesterov: true
+  weight_decay: 0.01
+  lr: 0.01
+Shampoo_optimizer_config:
+  betas: [0.9, 0.999]
+  momentum: 0.0
+  weight_decay: 0.0
+  lr: 0.1
+RMSprop_optimizer_config:
+  alpha: 0.99
+  lr: 0.001
+  weight_decay: 0.01
+  momentum: 0.0
+
+weight_decay: 0.01 # to be deprecated
+learning_rate: 0.001 # to be deprecated
+max_epochs: 100
+
+use_wandb: true
+wandb_config:
+  wandb_project: <your_wandb_project>
+  wandb_entity: <your_wandb_entity>
+  make_group: true
+
+seed: 42
+num_workers: 4
+use_loss_n: true
+loss_n_scale: 0.0

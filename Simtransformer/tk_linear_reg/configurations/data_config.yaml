@@ -1,0 +1,7 @@
+data_dir: data
+data_file_name: linear.pth
+vocab_file_name: vocab.yaml
+num_samples: 100000
+dim: 64
+seq_len: 128
+sigma: 0.1

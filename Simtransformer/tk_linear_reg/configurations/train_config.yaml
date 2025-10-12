@@ -1,0 +1,18 @@
+batch_size: 64
+lr_scheduler: cosine
+cosine_scheduler_config:
+  lr_decay_steps: 100000000.0
+  min_lr: 1.0e-05
+  warmup_steps: 1000
+StepLR_scheduler_config:
+  gamma: 0.1
+  step_size: 1000
+learning_rate: 0.001
+max_epochs: 500
+optimizer: AdamW
+wandb_config:
+  wandb_entity: scgpt-siyu
+  wandb_project: linear_reg_GD
+weight_decay: 0.008
+seed: 41
+num_workers: 16
