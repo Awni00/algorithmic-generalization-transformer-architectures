@@ -11,7 +11,7 @@ from typing import Any, Optional, final, Union
 from datetime import datetime
 import numpy as np
 import copy
-from conduct_controlled_exp import *
+from model_interp.conduct_controlled_exp import *
 
 INVALID_NUM = -1
 # CONTROLLED_EXP_STEPS = 50
