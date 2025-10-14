@@ -23,7 +23,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 # spec = spec_from_file_location("local_tokenizers", os.path.join(current_dir, "factored_tokenizers.py"))
 # local_tokenizers = module_from_spec(spec)
 # spec.loader.exec_module(local_tokenizers)
-from experiments.factored_tokenizers import FactoredVocabTokenizer
+from tokenizers import FactoredVocabTokenizer
 from Simtransformer.simtransformer.utils import EasyDict
 
 import copy
@@ -211,10 +211,7 @@ if __name__ == '__main__':
     parser.add_argument('--checkpoint_dir', type=str_or_none, help='Dir to the checkpoint file.', default=None)
     parser.add_argument('--seed', default=None)
 
-    # set debug to be true
-    # args = parser.parse_args(['--debug', '--nointerm']) ## FIXME: remove this line
-
-    args = parser.parse_args() # FIXME: comment out this line if you want to use the above args
+    args = parser.parse_args()
 
     # set the seed for reproducibility
     if args.seed is not None:
