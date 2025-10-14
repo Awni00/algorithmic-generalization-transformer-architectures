@@ -9,7 +9,7 @@ from dag_generator import generate_abs_dag
 import torch
 from Simtransformer.simtransformer.utils import EasyDict
 
-from experiments.factored_tokenizers import FactoredVocabTokenizer
+from tokenizers import FactoredVocabTokenizer
 
 # get the current directory
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -176,7 +176,7 @@ def generate_dataset(dag_config, factored_tokenizer):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_config_path', type=str, default=os.path.join(current_dir, 'configs/Nodes64-ADD-L2H16D256_DeBERTa/data_config.yaml'))
+    parser.add_argument('--data_config_path', type=str)
 
     args = parser.parse_args()
 

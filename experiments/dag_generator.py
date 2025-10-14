@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from typing import List, Optional, Union
 
-from factored_tokenizers import FactoredVocabTokenizer
+from tokenizers import FactoredVocabTokenizer
 
 # get currentdir
 import os
