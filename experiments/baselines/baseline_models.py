@@ -92,7 +92,7 @@ class LitRecurrentTransformerModel(pl.LightningModule):
         self.model_config = model_config
         self.data_config = data_config
         self.train_config = train_config
-        self.factor_loss_scales = [1, 1, 1, 1, 0, 0] # TODO: FIXME: figure out how to set these scaling factors; may need to normalize according to vocab_size of each factor>
+        self.factor_loss_scales = [1, 1, 1, 1, 0, 0]
 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.fast_criterion = torch.nn.CrossEntropyLoss(reduction='none')

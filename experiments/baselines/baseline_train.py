@@ -26,10 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--config_dir', type=str, default=os.path.join(current_dir, 'configs/Nodes32-ADD-BaselineT1L4H16D512_DeBERTa'))
     parser.add_argument('--debug', action='store_true', help='Run in debug mode (no logging, no checkpoints).')
 
-    # set debug to be true
-    # args = parser.parse_args(['--debug', '--nointerm']) ## FIXME: remove this line
-
-    args = parser.parse_args() # FIXME: comment out this line if you want to use the above args
+    args = parser.parse_args()
 
     # set the seed for reproducibility
     seed = np.random.randint(0, 2**32) # randomly sample a seed

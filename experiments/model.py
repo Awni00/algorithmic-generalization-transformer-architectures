@@ -251,7 +251,7 @@ class LitRecurrentTransformerModel(pl.LightningModule):
         self.model_config = model_config
         self.data_config = data_config
         self.train_config = train_config
-        self.factor_loss_scales = [1, 1, 1, 1, 0, 0] # TODO: FIXME: figure out how to set these scaling factors; may need to normalize according to vocab_size of each factor>
+        self.factor_loss_scales = [1, 1, 1, 1, 0, 0] # uniform scaling for now
 
         # Important NOTE: There are several moving parts in the optimization procedure:
         # 1. Loop over depths, to train all depths in the batch
@@ -348,7 +348,6 @@ class LitRecurrentTransformerModel(pl.LightningModule):
         # return total_train_loss
 
     def validation_step(self, batch, batch_idx):
-        # return 0.0 ## FIXME: remove this line. This is for skipping the sanity check
         if self.nointerm:
             total_val_loss = self.compute_batch_loss_nointerm(batch, log_prefix='val', log=True, on_step=False, on_epoch=True)
         else:
@@ -369,12 +368,6 @@ class LitRecurrentTransformerModel(pl.LightningModule):
 
 
             total_val_loss = self.compute_batch_loss(batch, train=False, log_prefix='val', log=True, on_step=False, on_epoch=True, use_teacher_pred_for_next_loop=use_teacher_pred_for_next_loop, use_regret_for_correction=False, verbose=False)
-            # TODO: add evaluation of full non-teacher-forcing generation (i.e, start-to-finish computation through iteration)
-
-            # NOTE / FIXME: commented this out for now to test (don't have required file for now)
-            # # conduct a controlled experiment
-            # for controlled_exp_key in ['var_0', 'var_1', 'var_2', 'rhs']:
-            #     controlled_experiment_step(controlled_exp_key, self, self.model_config, logger=self.log, wandb_logger=self.logger)
 
 
 
