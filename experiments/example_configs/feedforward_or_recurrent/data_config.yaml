@@ -1,0 +1,34 @@
+dag_config:
+  data_file_name: train_data.pt
+  fix_graph: false
+  func_vocab:
+  - ADD
+  max_comp_depth: 6
+  max_depth: 6
+  max_fan_in_deg: 3
+  max_length: 256
+  min_fan_in_deg: 1
+  mod_val: 23
+  num_leaf_nodes: 6
+  num_nodes: 32
+  num_samples: 50000
+  shuffle_node_name: true
+  verbose: false
+data_dir: data/Tr32Test128-ADD
+tokenizer_file_name: tokenizer.pickle
+val_dag_config:
+  data_file_name: val_data.pt
+  fix_graph: false
+  func_vocab:
+  - ADD
+  max_comp_depth: 36
+  max_depth: 36
+  max_fan_in_deg: 3
+  max_length: 1024
+  min_fan_in_deg: 1
+  mod_val: 23
+  num_leaf_nodes: 6
+  num_nodes: 128
+  num_samples: 1000
+  shuffle_node_name: true
+  verbose: false

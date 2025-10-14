@@ -1,0 +1,58 @@
+AdamW_optimizer_config:
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  lr: 0.001
+  weight_decay: 0.01
+Adam_optimizer_config:
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  lr: 0.0001
+  weight_decay: 0.0
+RMSprop_optimizer_config:
+  alpha: 0.99
+  lr: 0.001
+  momentum: 0.0
+  weight_decay: 0.01
+SGD_optimizer_config:
+  lr: 0.01
+  momentum: 0.9
+  nesterov: true
+  weight_decay: 0.01
+Shampoo_optimizer_config:
+  betas:
+  - 0.9
+  - 0.999
+  lr: 0.1
+  momentum: 0.0
+  weight_decay: 0.0
+StepLR_scheduler_config:
+  gamma: 0.1
+  step_size: 1000
+batch_size: 32
+compile: false
+cosine_scheduler_config:
+  lr_decay_steps: 300000.0
+  min_lr: 1.0e-05
+  warmup_steps: 1000
+cot_type: eq-val
+learning_rate: 0.001
+lr_scheduler: none
+matmul_precision: medium
+max_epochs: 100
+max_train_depth: 6
+max_train_loop: 8
+max_val_loop: 36
+num_workers: 8
+optimizer: AdamW
+precision: 32
+train_temperature: 1.0
+use_teacher_pred_for_next_loop: true
+val_check_interval: 1.0
+val_temperature: 0.0
+wandb_config:
+  wandb_entity: [YOUR ENTITY]
+  wandb_project: [YOUR PROJECT]

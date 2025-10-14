@@ -1,0 +1,28 @@
+attention_type: softmax
+attn_pdrop: 0.1
+causal_attn: true
+hidden_size: 256
+input_size: 256
+layer_norm_eps: 1.0e-05
+max_seq_len: 1024
+n_iters: 2
+n_layers: 4
+num_heads: 16
+num_layers: 2
+pos_enc_type: RoPE
+q_k_v_o_proj_enabled:
+- true
+- true
+- true
+- true
+relpos_embed_size: 256
+relpos_q_k_enabled:
+- true
+- true
+relpos_shift: 0
+relpos_win_size: 64
+resid_pdrop: 0.1
+use_bias: true
+use_layer_norm: true
+use_pos_layer_norm: true
+use_readout_proj: true
