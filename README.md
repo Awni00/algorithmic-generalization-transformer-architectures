@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning
+# Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning
 
 **Awni Altabaa** · **Siyu Chen** · **John Lafferty** · **Zhuoran Yang**
 
@@ -12,23 +12,24 @@
 
 ---
 
-## 📝 Abstract
+## 💡 Abstract
 
-Systematic, compositional generalization beyond the training distribution remains a core challenge in machine learning---and a critical bottleneck for the emergent reasoning abilities of modern language models.
+Systematic, compositional generalization beyond the training distribution remains a core challenge in machine learning—and a critical bottleneck for the emergent reasoning abilities of modern language models.
 
 This work investigates out-of-distribution (OOD) generalization in Transformer networks using a GSM8K-style modular arithmetic on computational graphs task as a testbed.
 
-### 🔧 Key Contributions
-
+<!-- 
+### ⭐ Key Contributions
+-->
 We introduce and explore **four architectural mechanisms** aimed at enhancing OOD generalization:
 
 1. **🔄 Input-adaptive recurrence** - Recurrent architecture that scales computation through input-adaptive recurrence.
 2. **📚 Algorithmic supervision** - Structured learning objectives that encode algorithmic knowledge  
 3. **⚓ Anchored latent representations** - Discrete bottlenecks for stable feature learning
 4. **🔧 Explicit error-correction mechanism** - Built-in self-correction capabilities
-
-### 🎯 Results
-
+<!--
+### 📊 Results
+-->
 Collectively, these mechanisms yield an architectural approach for **native and scalable latent space reasoning** in Transformer networks with robust algorithmic generalization capabilities. We complement these empirical results with a detailed **mechanistic interpretability analysis** that reveals how these mechanisms give rise to robust OOD generalization abilities.
 
 ---
