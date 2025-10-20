@@ -367,7 +367,7 @@ Combining these mechanisms yields dramatic improvement in out-of-distribution pe
       <img src="figures/method_ood_comparison_compact.png" alt="Method OOD Comparison" width="100%"/>
     </p>
     <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
-      <strong>Figure (a):</strong> OOD generalization across methods. Our full method (red) achieves near-perfect performance even at 4× training size.
+      <strong>Figure (a):</strong> OOD generalization across methods. Our full method (dark blue) achieves near-perfect performance even at 4× training size.
     </p>
   </div>
   <div style="flex: 1;">
