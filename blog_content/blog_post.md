@@ -76,23 +76,18 @@ The computation graph is presented to the model as a **token sequence**.
 \end{aligned}
 $$
  -->
-<div style="background-color: rgba(197, 197, 197, 0.8); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #5e5e5eff; max-width: 800px; text-align: left;">
+<div style="background-color: rgba(197, 197, 197, 0.17); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #5e5e5eff; max-width: 800px; text-align: left;">
 $$
 \begin{aligned}
 &\langle 20 \rangle \langle \to \rangle \langle x_7 \rangle [\text{sep}]
  \langle 2 \rangle \langle \to \rangle \langle x_{42} \rangle [\text{sep}]
  \langle 6 \rangle \langle \to \rangle \langle x_{88} \rangle [\text{sep}]
  \langle 14 \rangle \langle \to \rangle \langle x_{115} \rangle [\text{sep}] \\
-&\langle x_7 \rangle \langle + \rangle \langle x_{42} \rangle \langle \to \rangle \langle x_{23} \rangle [\text{sep}] \\
-&\langle x_{42} \rangle \langle + \rangle \langle x_{88} \rangle \langle \to \rangle \langle x_{91} \rangle [\text{sep}] \\
-&\langle x_{88} \rangle \langle \times \rangle \langle x_{115} \rangle \langle \to \rangle \langle x_{55} \rangle [\text{sep}] \\
-&\langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle \langle \to \rangle \langle x_{101} \rangle [\text{sep}] \\
-&\langle x_{91} \rangle \langle - \rangle \langle x_{88} \rangle \langle + \rangle \langle x_{55} \rangle \langle \to \rangle \langle x_{30} \rangle
+&\langle x_7 \rangle \langle + \rangle \langle x_{42} \rangle \langle \to \rangle \langle x_{23} \rangle [\text{sep}] \langle x_{42} \rangle \langle + \rangle \langle x_{88} \rangle \langle \to \rangle \langle x_{91} \rangle [\text{sep}] \langle x_{88} \rangle \langle \times \rangle \langle x_{115} \rangle \langle \to \rangle \langle x_{55} \rangle [\text{sep}] \\
+&\langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle \langle \to \rangle \langle x_{101} \rangle [\text{sep}] \langle x_{91} \rangle \langle - \rangle \langle x_{88} \rangle \langle + \rangle \langle x_{55} \rangle \langle \to \rangle \langle x_{30} \rangle
 \end{aligned}
 $$
 </div>
-
-<!-- TODO:  put in gray box; make sure math still rrenders -->
 
 This sequence serves as the **input prompt** to the model.
 
@@ -193,7 +188,7 @@ Here, `[...]` denotes the preceding CoT trajectory that computed $x_{23}$ and $x
 
 </div>
 
-**These failures highlight a clear need for architectural mechanisms that move beyond brittle token-level reasoning towards models that with a native ability to learn algorithms.**
+**These failures highlight a clear need for architectural mechanisms that move beyond brittle token-level reasoning towards models with a native ability to learn algorithms.**
 
 ### 🚀 Our Solution: Four Architectural Mechanisms
 
@@ -288,7 +283,7 @@ $$
 (E_1^{(t+1)}, \ldots, E_n^{(t+1)}) \gets \mathrm{RecurrentTransformerBlock}(E_1^{(t)}, \ldots, E_n^{(t)}), \quad t = 1, 2, \ldots, T
 $$
 
-**Crucially**, the number of recurrent iterations $T$ is **not fixed**—it **adapts to the input**. Specifically, $T$ scales linearly with the depth $D$ of the computation graph. This input-adaptive recurrence enables dynamic scaling of computation time to match problem complexity.
+Crucially, the number of recurrent iterations $T$ is not fixed—it **adapts to the input complexity**. Specifically, $T$ scales linearly with the depth $D$ of the computation graph. This input-adaptive recurrence enables dynamic scaling of computation time to match problem complexity.
 
 **Key Advantage**: Unlike CoT methods that scale computation by generating progressively longer token sequences, recurrence introduces inductive biases favoring recursive solution structures that are inherently more scalable.
 
@@ -306,7 +301,7 @@ $$
 \text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \underbrace{\mathbb{1}[\text{Depth}(x_i) \leq t]}_{\text{only supervise nodes computable by iteration } t} \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i))
 $$
 
-**Intuition**: At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.
+**Intuition**: The algorithm alignment loss encourages the model to solve the problem iteratively, rather than attempting to solve it all at once. At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.
 
 <!-- 
 **Example**: In the graph from Figure 1:
@@ -446,7 +441,7 @@ We form hypotheses about each component's role, then design controlled experimen
 Here's what we found—the model implements an **induction head** mechanism tailored to the task! Let's break it down step-by-step:
 
 ![Complete Mechanism](figures/2-layer-illustrated.png)
-*The complete computational circuit showing how each layer contributes! 🎨*
+*The complete computational circuit showing how each layer contributes 🎨*
 
 <div style="background-color: rgba(156, 39, 176, 0.1); padding: 15px; border-left: 5px solid #9C27B0; margin: 20px 0; border-radius: 4px;">
 
@@ -460,7 +455,7 @@ Here's what we found—the model implements an **induction head** mechanism tail
 - **Heads $\{5, 12\}$**: Track the second variable ($\mathtt{var}_1$) 🎯
 - **Heads $\{3, 7, 11, 14\}$**: Track the third variable ($\mathtt{var}_2$) 🎯
 
-**Crucial Detail**: These heads copy variable *identities* (not values!) to the position where computation occurs. They're saying: "Remember that we need to look up $x_7$, $x_{42}$, and $x_{88}$"
+**Crucial Detail**: These heads copy variable *identities* (not values) to the position where computation occurs. They're saying: "Remember that we need to look up $x_7$, $x_{42}$, and $x_{88}$"
 
 </div>
 
@@ -500,7 +495,7 @@ Here's what we found—the model implements an **induction head** mechanism tail
 
 <img src="figures/L0_ov_operator_norm_mpl.png" alt="L0 OV Norm" style="float: right; width: 25%; margin-left: 20px; margin-bottom: 10px;"/>
 
-Operator norm amplification for different factored embedding types across all 16 attention heads. The `variable` factor (orange) shows dramatically higher amplification than other factors, confirming that first-layer attention heads copy **`variable` identities** (not `value`s!) to the $\mathtt{rhs}$ position.
+Operator norm amplification for different factored embedding types across all 16 attention heads. The `variable` factor (orange) shows dramatically higher amplification than other factors, confirming that first-layer attention heads copy **`variable` identities** (not `value`s) to the $\mathtt{rhs}$ position.
 
 <div style="clear: both;"></div>
 
@@ -508,16 +503,15 @@ Operator norm amplification for different factored embedding types across all 16
 
 ### **🎯 Layer 1 MLP: Minimal Processing**
 
-**What We Found**: The first MLP makes only minor adjustments to the residual stream (relative $L_2$ error $< 10\%$)!
+**What We Found**: The first MLP makes only minor adjustments to the residual stream (relative $L_2$ change $< 10\%$)
 
-**Why This Matters**: This efficient division of labor focuses computational capacity where it's needed most—primarily in attention for information routing and the final MLP for arithmetic computation.
-
+**Interpretation**: The model discovered an induction head mechanism for solving the task, where the role of the first layer is merely to copy variable identities via attention to be used as the *query* in the *next layer attention*. Thus, the first layer *MLP* does not need to carry out any computation, and is approximately the identity. The arithmetic computation will be carried out by the second layer MLP.
 </div>
 
 <div style="text-align: center;">
   <img src="figures/l2_relative_error.png" alt="L2 Relative Error" />
   <p style="margin-top:8px; font-style:italic;">
-    Layer 1 MLP contributes minimally—most work happens in attention and the final MLP! 📉
+    Layer 1 MLP contributes minimally—most work happens in attention and the final MLP 📉
   </p>
 </div>
 
@@ -525,7 +519,7 @@ Operator norm amplification for different factored embedding types across all 16
 
 ### **🔄 Layer 2 Attention: Value Retrieval (The Induction Head)**
 
-**What It Does**: Now that we know *which* variables we need, the second layer's attention heads retrieve their *values*!
+**What It Does**: Now that we know *which* variables we need, the second layer's attention heads retrieve their *values*.
 
 **The Induction Head Mechanism**:
 
@@ -576,7 +570,7 @@ Operator norm amplification for Layer 2 heads. Unlike Layer 1 (which amplified `
 
 **The Setup**: By this point, the MLP receives the sum of three transformed value embeddings—one for each variable. Now it needs to compute (x + y + z) mod 23.
 
-**The Discovery**: The MLP performs modular arithmetic using a **frequency-based mechanism**! 🌊
+**The Discovery**: The MLP performs modular arithmetic using a **frequency-based mechanism** 🌊
 
 **How It Works**:
 
@@ -592,7 +586,7 @@ $$
 $$
 contains terms with $\cos(2\pi a(x+y+z)/23)$ (via trigonometric product identities). Similar patterns hold for sine functions.
 
-The periodic nature of trigonometric functions **automatically handles** the modulo-23 arithmetic! No explicit mod operation needed—it emerges naturally from the periodic structure. The MLP learns to represent values using combinations of these sine and cosine bases. 🎯
+The periodic nature of trigonometric functions **automatically handles** the modulo-23 arithmetic. No explicit mod operation needed—it emerges naturally from the periodic structure. The MLP learns to represent values using combinations of these sine and cosine bases. 🎯
 
 </div>
 
@@ -600,13 +594,13 @@ The periodic nature of trigonometric functions **automatically handles** the mod
 *Before MLP: Dominated by bias term (0,0,0 frequency)*
 
 ![FFT MLP Postact](figures/fft_histograms_L1-mlp-postact.png)
-*During MLP: Bias decreases, diagonal frequencies increase! 🌊*
+*During MLP: Bias decreases, diagonal frequencies increase 🌊*
 
 ![FFT MLP Output](figures/fft_histograms_L1-mlp-output.png)
-*After MLP: Strong diagonal components encoding the sum! The frequency (a,a,a) represents $\cos(2\pi a(\mathtt{var}_0+\mathtt{var}_1+\mathtt{var}_2)/23)$ 🎵*
+*After MLP: Strong diagonal components encoding the sum. The frequency (a,a,a) represents $\cos(2\pi a(\mathtt{var}_0+\mathtt{var}_1+\mathtt{var}_2)/23)$ 🎵*
 
 ![FFT Decoder Output](figures/fft_histograms_decoder-output.png)
-*Final output maintains the frequency structure for decoding! 🎯*
+*Final output maintains the frequency structure for decoding 🎯*
 
 **Interpreting the Frequency Analysis:** The progression through these figures reveals the MLP's computational strategy. At the output layer (third figure), we observe strong magnitudes for diagonal frequency components $(a,a,a)$ where $a \in \{1, \ldots, 22\}$. These diagonal frequencies are crucial because they encode the sum: a component with frequency $(a,a,a)$ corresponds to trigonometric functions of $\mathtt{var}_0 + \mathtt{var}_1 + \mathtt{var}_2$. The MLP essentially transforms the input into this frequency-based representation, where the final answer can be directly decoded from these sum-encoding components. This elegant mechanism allows modular arithmetic to emerge naturally from the periodic structure of sine and cosine functions.
 
