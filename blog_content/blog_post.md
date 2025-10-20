@@ -382,7 +382,7 @@ Combining these mechanisms yields dramatic improvement in out-of-distribution pe
 
 <!-- TODO: make sure panels are scaled such that height is equal. -->
 
-**Result**: Combining all four mechanisms, our full method (**Discrete Latent Space Supervision ↻**) achieves **near-perfect performance** even on graphs 4× larger than training, with accuracy remaining above **99.5%** at $N=128$.
+**Result**: Combining all four mechanisms, our full method (**Discrete Latent Space Supervision ↻**) achieves **perfect performance** even on graphs 4× larger than training$.
 
 ### Ablation Analysis: Understanding Each Mechanism's Contribution
 
