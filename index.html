@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title"
+    content="Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description"
+    content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <meta name="keywords"
+    content="algorithmic generalization, transformers, recurrence, latent space reasoning, modular arithmetic, discrete representations, error correction, mechanistic interpretability, adaptive computation, algorithmic supervision">
+  <!-- TODO: List all authors -->
+  <meta name="author" content="Awni Altabaa, Siyu Chen, John Lafferty, Zhuoran Yang">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="Yale University">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title"
+    content="Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description"
+    content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
+  <!-- TODO: Same as paper title above -->
+  <meta name="twitter:title"
+    content="🧠 Recursive Thinking From Within: How Transformers Learn Algorithms Through Latent Space Reasoning">
+  <!-- TODO: Same as description above -->
+  <meta name="twitter:description"
+    content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
+  <!-- TODO: Same as social preview image above -->
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title"
+    content="🧠 Recursive Thinking From Within: How Transformers Learn Algorithms Through Latent Space Reasoning">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- paper title and authors -->
+  <title>Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning - Awni
+    Altabaa, Siyu Chen, John Lafferty, Zhuoran Yang</title>
+
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- TikZJax for rendering LaTeX TikZ diagrams -->
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+
+  <!-- MathJax v3: TeX rendering support -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        packages: {'[+]': ['ams', 'textmacros']}
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+        renderActions: { addMenu: [] }
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning",
+    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Awni Altabaa",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Yale University"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Siyu Chen",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Yale University"
+        }
+      },
+            {
+        "@type": "Person",
+        "name": "John Lafferty",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Yale University"
+        }
+      },
+            {
+        "@type": "Person",
+        "name": "Zhuoran Yang",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Yale University"
+        }
+      }
+    ],
+    "datePublished": "2025-10-15",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
+    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
+    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
+    "abstract": "FULL_ABSTRACT_TEXT_HERE",
+    "citation": "BIBTEX_CITATION_HERE",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_1"
+      },
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_2"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "INSTITUTION_OR_LAB_NAME",
+    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
+    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "sameAs": [
+      "https://twitter.com/YOUR_TWITTER_HANDLE",
+      "https://github.com/YOUR_GITHUB_USERNAME"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <!--
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+
+      <div class="works-list">
+        <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 1</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 2</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 3</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  -->
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">Unlocking Out-of-Distribution Generalization in Transformers via
+                Recursive Latent Space Reasoning</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://awni.xyz" target="_blank">Awni Altabaa</a>,</span>
+                <span class="author-block">
+                  <a href="https://ffishy-git.github.io/" target="_blank">Siyu Chen</a>,</span>
+                <span class="author-block">
+                  <a href="https://www.lafferty-lab.org/" target="_blank">John Lafferty</a>,</span>
+                <span class="author-block">
+                  <a href="https://zhuoranyang.github.io/" target="_blank">Zhuoran Yang</a>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Yale University, Department of Statistics & Data Science</span>
+                <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a href="https://arxiv.org/pdf/2510.14095.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/Awni00/algorithmic-generalization-transformer-architectures"
+                      target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2510.14095" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Teaser video-->
+    <!--
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/banner_video.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat
+            pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus.
+          </h2>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End teaser video -->
+
+    <!-- Paper abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Systematic, compositional generalization beyond the training distribution remains a core challenge in
+                machine learning—and a critical bottleneck for the emergent reasoning abilities of modern language
+                models. This work investigates out-of-distribution (OOD) generalization in Transformer networks using a
+                GSM8K-style modular arithmetic on computational graphs task as a testbed. We introduce and explore a set
+                of four architectural mechanisms aimed at enhancing OOD generalization: <i>(i)</i> input-adaptive
+                recurrence; <i>(ii)</i> algorithmic supervision; <i>(iii)</i> anchored latent representations via a
+                discrete bottleneck; and (iv) an explicit error-correction mechanism. Collectively, these mechanisms
+                yield an architectural approach for native and scalable latent space reasoning in Transformer networks
+                with robust algorithmic generalization capabilities. We complement these empirical results with a
+                detailed mechanistic interpretability analysis that reveals how these mechanisms give rise to robust OOD
+                generalization abilities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
+
+    <!-- Section: 🎯 Motivation: Do Language Models Truly Reason? -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">🎯 Motivation: Do Language Models Truly Reason?</h2>
+            <p>The reasoning capabilities of <b>Large Language Models (LLMs)</b> have advanced dramatically in recent years, particularly through <b>Chain-of-Thought (CoT)</b> techniques that enable models to generate step-by-step reasoning traces. These advances have led to impressive performance on mathematical reasoning tasks, with models now solving complex problems that once seemed beyond reach.</p>
+            <p>But beneath this impressive performance lies a fundamental question: Do LLMs truly learn to implement <b>scalable algorithms</b> and <b>reason systematically</b>, or do they simply <b>memorize patterns and heuristics</b> that happen to work within their training distribution?</p>
+            <p>Recent evidence points toward the latter. Even the largest models often fail when tested on longer or more complex inputs (<a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/fb7451e43f9c1c35b774bcfad7a5714b-Abstract-Conference.html" target="_blank">Anil et al. 2022</a>; <a href="https://arxiv.org/abs/2306.15400" target="_blank">Jelassi et al. 2023</a>; <a href="https://arxiv.org/abs/2506.06941" target="_blank">Mirzadeh et al., 2025</a>). Performance collapses abruptly once tasks exceed the length or complexity of the training regime, indicating that models may learn distribution-specific shortcuts rather than true, compositional algorithms.</p>
+            <p>This motivates the central question explored in this work:</p>
+            <div style="background-color: rgba(33, 150, 243, 0.15); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #2196F3; max-width: 800px; text-align: left;">
+              💭 <b>The Central Question</b>: What architectural mechanisms are needed to enable transformer models to discover robust and scalable algorithmic solutions that can generalize beyond the training distribution to larger and more complex problems?
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 🎯 Motivation: Do Language Models Truly Reason? -->
+
+
+    <!-- Section: 🧪 Our Testbed: Modular Arithmetic on Scalable Computation Graphs -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">🧪 Our Testbed: Modular Arithmetic on Scalable Computation Graphs</h2>
+
+            <h3>The Task Definition</h3>
+            <p><b>Problem:</b> Evaluate arithmetic expressions on <b>directed acyclic graphs (DAGs)</b> under modular arithmetic (modulo 23).</p>
+            <ul>
+              <li><b>Input:</b> A computation graph where:
+                <ul>
+                  <li><b>Leaf nodes</b> are assigned integer values</li>
+                  <li><b>Internal nodes</b> are computed via arithmetic operations on their dependencies</li>
+                  <li>All operations ($+, -, \times $) performed modulo 23</li>
+                </ul>
+              </li>
+              <li><b>Output:</b> Compute the values of all nodes in the graph</li>
+            </ul>
+
+            <h3>A Concrete Example</h3>
+            <div style="text-align:center">
+              <img src="static/figures/formula_graph.png" alt="Computation Graph" />
+              <p style="margin-top:8px; font-style:italic; text-align:center;">
+                Computation graph illustration: green nodes ($x_7$, $x_{42}$, $x_{88}$, $x_{115}$) are leaf nodes with given values; pink boxes denote arithmetic operations ($+$, $\times$, $-$); blue nodes ($x_{23}$, $x_{91}$, $x_{55}$, $x_{101}$, $x_{30}$) are computed from their dependencies.
+              </p>
+            </div>
+
+            <div style="background-color: rgba(33, 150, 243, 0.15); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #2196F3; max-width: 800px; text-align: center;">
+              <b>📝 The Task:</b> Given $x_7=20$, $x_{42}=2$, $x_{88} = 6$, $x_{115} =14$, compute $x_{23}$, $x_{91}$, $x_{55}$, $x_{101}$, and $x_{30}$
+            </div>
+
+            <h3>Input Representation</h3>
+            <p>The computation graph is presented to the model as a <b>token sequence</b>.</p>
+            <p><b>Token Vocabulary:</b></p>
+            <ul>
+              <li><b>Values</b>: <code>0</code>, <code>1</code>, ..., <code>22</code> (mod 23)</li>
+              <li><b>Variables</b>: <code>x_0</code>, <code>x_1</code>, ..., <code>x_127</code></li>
+              <li><b>Operations</b>: <code>+</code>, <code>-</code>, <code>×</code></li>
+              <li><b>Special tokens</b>: <code>→</code> (assignment), <code>[sep]</code> (separator)</li>
+            </ul>
+            <p><b>Example Token Sequence for the graph above:</b></p>
+            <div style="background-color: rgba(197, 197, 197, 0.8); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #5e5e5eff; max-width: 800px; text-align: left;">
+$$
+\begin{aligned}
+&\langle 20 \rangle \langle \to \rangle \langle x_7 \rangle [\text{sep}]
+ \langle 2 \rangle \langle \to \rangle \langle x_{42} \rangle [\text{sep}]
+ \langle 6 \rangle \langle \to \rangle \langle x_{88} \rangle [\text{sep}]
+ \langle 14 \rangle \langle \to \rangle \langle x_{115} \rangle [\text{sep}] \\
+&\langle x_7 \rangle \langle + \rangle \langle x_{42} \rangle \langle \to \rangle \langle x_{23} \rangle [\text{sep}] \\
+&\langle x_{42} \rangle \langle + \rangle \langle x_{88} \rangle \langle \to \rangle \langle x_{91} \rangle [\text{sep}] \\
+&\langle x_{88} \rangle \langle \times \rangle \langle x_{115} \rangle \langle \to \rangle \langle x_{55} \rangle [\text{sep}] \\
+&\langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle \langle \to \rangle \langle x_{101} \rangle [\text{sep}] \\
+&\langle x_{91} \rangle \langle - \rangle \langle x_{88} \rangle \langle + \rangle \langle x_{55} \rangle \langle \to \rangle \langle x_{30} \rangle
+\end{aligned}
+$$
+            </div>
+            <p>This sequence serves as the <b>input prompt</b> to the model.</p>
+
+            <h3>The Natural Algorithm</h3>
+            <p>To solve this problem, a natural algorithmic approach is to <b>compute nodes layer-by-layer in topological order</b>:</p>
+            <p><b>Iteration 1 (Depth 1)</b> - Compute nodes that depend only on leaf values:</p>
+            <ul>
+              <li>$x_{23} = x_7 + x_{42} = 20 + 2 = 22 \pmod{23}$</li>
+              <li>$x_{91} = x_{42} + x_{88} = 2 + 6 = 8 \pmod{23}$</li>
+              <li>$x_{55} = x_{88} \times x_{115} = 6 \times 14 = 15 \pmod{23}$</li>
+            </ul>
+            <p><b>Iteration 2 (Depth 2)</b> - Compute nodes that depend on depth ≤ 1:</p>
+            <ul>
+              <li>$x_{101} = x_{23} \times x_{91} = 22 \times 8 = 15 \pmod{23}$</li>
+              <li>$x_{30} = x_{91} - x_{88} + x_{55} = 8 - 6 + 15 = 17 \pmod{23}$</li>
+            </ul>
+
+            <div style="background-color: rgba(255, 152, 0, 0.1); padding: 15px; border-left: 5px solid #FF9800; margin: 20px 0; border-radius: 4px;">
+              <p><b>🎯 Key Property: Depth-Invariant Algorithm</b></p>
+              <p>The <b>complexity</b> of each problem is parameterized by graph size $N$ and depth $D$. However, the <b>algorithm itself is independent of depth</b> each step—it is a recursive procedure with a shared layer-by-layer procedure!</p>
+              <p><b>The Critical Test for Algorithmic Learning:</b></p>
+              <ul>
+                <li>If a model learns and can execute a scalable <b>algorithm</b>, it should be able to generalize to graphs of any size</li>
+                <li>If it memorizes <b>patterns</b>, performance will collapse on larger graphs</li>
+              </ul>
+              <p>This setup provides a controlled environment for probing whether Transformers can truly learn <i>scalable algorithms</i>.</p>
+            </div>
+
+            <h3>Why This is an Ideal Testbed for Algorithmic Generalization</h3>
+            <p>This task possesses three key properties that make it perfect for testing whether models learn genuine algorithms:</p>
+            <ol>
+              <li><b>📏 Complexity is Parameterized by Graph Size</b>: Problem complexity is directly controlled by the number of nodes $N$ and depth $D$ in the graph.</li>
+              <li><b>🔄 Target Algorithm is Depth-Invariant</b>: The layer-by-layer algorithm that solves the problem has a <b>recursive compositional structure</b>. Thus, once the core problem-solving procedure is learned, it can generalize to arbitrary inputs by the number of iterations, enabling algorithmic generalization.</li>
+              <li><b>🎯 Captures Real Mathematical Reasoning</b>: This task mirrors the structure of established mathematical reasoning benchmarks like GSM8K, where multi-step arithmetic must be performed in dependency order.</li>
+            </ol>
+            <p><b>The Critical Test</b>: If a model learns the <b>algorithm</b> (layer-by-layer traversal), it should work on graphs of any size. If it memorizes <b>distribution-specific patterns</b>, performance will collapse on larger graphs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 🧪 Our Testbed: Modular Arithmetic on Scalable Computation Graphs -->
+
+    <!-- Section: 📊 Experimental Setup & Baseline Methods -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">📊 Experimental Setup & Baseline Methods</h2>
+
+            <h3>Training and Testing Data</h3>
+            <p><b>Training:</b> Models are trained on randomly generated computation graphs with graph size limited by $N \leq 32$.</p>
+            <p><b>Testing for Algorithmic Generalization:</b> To assess algorithmic generalization, we vary graph size up to $N = 128$, inspecting the degradation of performance of different methods as complexity scales beyond the training regime.</p>
+            <p>These larger problem instances are not only longer (i.e., input representation scales with graph size), but also also have larger <i>computational depth</i>, requiring computation to scale beyond anything seen during training. That is, generalizing to these more complex problem instances requires an ability to <b>handle longer inputs</b> as well as an ability to <b>scale computation beyond the training regime</b>.</p>
+
+            <h3>Baseline Methods</h3>
+            <p>To establish the limitations of current approaches, we evaluate two standard training paradigms:</p>
+
+            <h4>1. <b>End-to-End Training</b></h4>
+            <p>Standard transformer models trained to directly output all node values given the input, without explicit intermediate steps.</p>
+            <ul>
+              <li><b>Input:</b> Token sequence representing the graph (as shown above)</li>
+              <li><b>Output:</b> Direct prediction of all node values</li>
+              <li><b>Architectures tested:</b> Both feedforward and recurrent transformers</li>
+            </ul>
+
+            <h4>2. <b>Chain-of-Thought (CoT) Training</b></h4>
+            <p>The prevalent technique for multi-step reasoning in LLMs. Instead of directly outputting the answer, CoT trains the model to generate intermediate reasoning steps.</p>
+            <ul>
+              <li><b>Input:</b> Token sequence representing the graph followed by a special $\langle \text{CoT} \rangle$ token indicating the start of the CoT trace</li>
+              <li><b>Output:</b> Step-by-step computation in topological order</li>
+            </ul>
+            <p><b>Example CoT output for computing $x_{101}$:</b></p>
+$$
+[\text{...Input Prompt...}] \langle \text{CoT} \rangle [\text{...}] \langle x_{101} \rangle = \langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle = \langle 22 \rangle \langle \times \rangle \langle 8 \rangle = \langle 15 \rangle
+$$
+            <p>Here, <code>[...]</code> denotes the preceding CoT trajectory that computed $x_{23}$ and $x_{91}$.</p>
+            <p><b>Implementation:</b> For all methods, we conduct extensive hyperparameter search (layers, model dimension, positional encoding) and select the best-performing configuration for comparison.</p>
+
+            <h3>Observed OOD Generalization Deficiencies</h3>
+            <div style="background-color: rgba(239, 83, 80, 0.1); padding: 15px; border-left: 5px solid #EF5350; margin: 20px 0; border-radius: 4px;">
+              <p><b>🔴 Key Findings: Catastrophic Failure Beyond Training Distribution</b></p>
+              <ul>
+                <li><b>End-to-End models</b> (both feedforward and recurrent): Fail to effectively learn the task even in-distribution, with performance rapidly degrading as graph size increases.</li>
+                <li><b>Chain-of-Thought</b> enables significant improvement, achieving near-perfect in-distribution performance ($N \leq 32$). However, it exhibits only <b>limited OOD generalization</b> to moderately larger graphs ($N \approx 40$), and this capability <b>rapidly deteriorates</b> as graph sizes exceed the training regime.</li>
+              </ul>
+              <p><b>Key Takeaway:</b> Even CoT—with its explicit step-by-step supervision—learns distribution-specific shortcuts rather than a generalizable algorithm. The token-based linear reasoning format proves brittle and fails to scale.</p>
+            </div>
+            <p><b>These failures highlight a clear need for architectural mechanisms that move beyond brittle token-level reasoning towards models that with a native ability to learn algorithms.</b></p>
+
+            <h3>🚀 Our Solution: Four Architectural Mechanisms</h3>
+            <p>Effective out-of-distribution generalization demands more than memorizing reasoning traces—it requires learning a scalable algorithm that can adapt its computation to the input’s complexity. We identify four key mechanisms that together enable Transformers to learn true algorithmic reasoning:</p>
+            <div style="background-color: rgba(33, 150, 243, 0.1); padding: 20px; border-left: 5px solid #2196F3; margin: 20px 0; border-radius: 4px;">
+              <p><b>🌌 Core Principle: Depth-Invariant Latent Space Reasoning</b></p>
+              <p>Rather than forcing computation into a token-by-token format (like CoT), we enable <b>native latent-space reasoning</b> through:</p>
+              <ol>
+                <li><b>🔄 Recurrence &amp; Adaptive Computation</b> - Scale computation time with problem complexity via recurrence</li>
+                <li><b>🧭 Algorithmic Supervision</b> - Guide learning toward a scalable layer-by-layer procedure via latent space supervision</li>
+                <li><b>🧱 Discrete Latent Anchoring</b> - Prevent representational drift across iterations via discretization</li>
+                <li><b>🔧 Self-Correction</b> - Detect and recover from intermediate errors</li>
+              </ol>
+              <p>These mechanisms impose a <b>depth-invariant structure</b>: the model learns a recursive solution to the problem, enabling robust scaling far beyond training depth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 📊 Experimental Setup & Baseline Methods -->
+
+    <!-- Section: 🚀 Four Mechanisms for Algorithmic Generalization -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">🚀 Four Mechanisms for Algorithmic Generalization</h2>
+            <p>We identify four key architectural mechanisms that enable transformers to develop true algorithmic reasoning:</p>
+
+            <table style="width:100%; border:none; margin:0 auto; text-align:center;">
+              <tr>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/mech1.png" alt="Recurrence & Adaptive Computation" style="width:100%;"/>
+                  <br/>
+                  <div style="height: 40px; display: flex; align-items: center; justify-content: center;">
+                    <b>🔄 Recurrence &amp;<br/>Adaptive Computation</b>
+                  </div>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/mech2.png" alt="Algorithmic Supervision" style="width:100%;"/>
+                  <br/>
+                  <div style="height: 40px; display: flex; align-items: center; justify-content: center;">
+                    <b>🎯 Algorithmic<br/>Supervision</b>
+                  </div>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/mech3.png" alt="Anchored Discrete Latent Space" style="width:100%;"/>
+                  <br/>
+                  <div style="height: 40px; display: flex; align-items: center; justify-content: center;">
+                    <b>🎲 Anchored Discrete<br/>Latent Space</b>
+                  </div>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/mech4.png" alt="Error Correction" style="width:100%;"/>
+                  <br/>
+                  <div style="height: 40px; display: flex; align-items: center; justify-content: center;">
+                    <b>🔧 Error<br/>Correction</b>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <p><i>Figure: Four architectural mechanisms enabling algorithmic generalization. (1) <b>Recurrence</b> allows adaptive computation depth matching problem complexity; (2) <b>Algorithmic Supervision</b> guides learning toward the correct layer-by-layer algorithm via latent space supervision; (3) <b>Discretization</b> creates stable checkpoints preventing representational drift across iterations; (4) <b>Error Correction</b> enables the model to detect and fix its own mistakes during iterative reasoning.</i></p>
+
+            <hr/>
+
+            <h3>Implementation of Proposed Mechanisms</h3>
+            <p>To evaluate the effectiveness of each mechanism, we study multiple model configurations implementing different subsets of these components:</p>
+
+            <div style="overflow-x:auto;">
+              <table class="table is-striped is-fullwidth">
+                <thead>
+                  <tr>
+                    <th><b>Method</b></th>
+                    <th><b>Mechanism 1<br/>Recurrence</b></th>
+                    <th><b>Mechanism 2<br/>Supervision</b></th>
+                    <th><b>Mechanism 3<br/>Discretization</b></th>
+                    <th><b>Mechanism 4<br/>Error Correction</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>End-to-End Feedforward</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+                  <tr><td>Recurrent End-to-End</td><td>◐</td><td>○</td><td>○</td><td>○</td></tr>
+                  <tr><td>Chain-of-Thought</td><td>◐</td><td>◐</td><td>○</td><td>○</td></tr>
+                  <tr><td>Continuous Latent Space Supervision</td><td>⬤</td><td>⬤</td><td>○</td><td>○</td></tr>
+                  <tr><td>Discrete Latent Space Supervision</td><td>⬤</td><td>⬤</td><td>⬤</td><td>○</td></tr>
+                  <tr><td><b>Discrete Latent Space Supervision ↻</b></td><td>⬤</td><td>⬤</td><td>⬤</td><td>⬤</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><i>Table: ⬤ = fully implemented, ◐ = partially implemented, ○ = not implemented</i></p>
+
+            <hr/>
+
+            <h3>Detailed Mechanism Descriptions</h3>
+
+            <div style="background-color: rgba(255, 152, 0, 0.12); padding: 15px; border-left: 5px solid #FF9800; margin: 20px 0; border-radius: 4px;">
+              <h4>🔄 Mechanism 1: Recurrence &amp; Input-Adaptive Computation</h4>
+              <p><b>Motivation</b>: Systematic generalization to more complex problem instances requires the ability to scale computation time proportionate to input complexity, beyond the training regime.</p>
+              <p><b>Implementation</b>: We employ a recurrent Transformer block that iteratively processes the input:</p>
+$$
+(E_1^{(t+1)}, \ldots, E_n^{(t+1)}) \gets \mathrm{RecurrentTransformerBlock}(E_1^{(t)}, \ldots, E_n^{(t)}), \quad t = 1, 2, \ldots, T
+$$
+              <p><b>Crucially</b>, the number of recurrent iterations $T$ is <b>not fixed</b>—it <b>adapts to the input</b>. Specifically, $T$ scales linearly with the depth $D$ of the computation graph. This input-adaptive recurrence enables dynamic scaling of computation time to match problem complexity.</p>
+              <p><b>Key Advantage</b>: Unlike CoT methods that scale computation by generating progressively longer token sequences, recurrence introduces inductive biases favoring recursive solution structures that are inherently more scalable.</p>
+            </div>
+
+            <div style="background-color: rgba(76, 175, 80, 0.12); padding: 15px; border-left: 5px solid #4CAF50; margin: 20px 0; border-radius: 4px;">
+              <h4>🎯 Mechanism 2: Latent State Algorithmic Supervision</h4>
+              <p><b>Motivation</b>: While recurrence provides capacity for iterative computation, it does not inherently guarantee that the model learns the desired layer-by-layer algorithmic procedure.</p>
+              <p><b>Implementation</b>: We provide supervision directly within the model's latent representation space at each recurrent step. At iteration $t$, a shared linear readout layer predicts node values from latent embeddings $E_i^{(t)}$. The training loss is:</p>
+$$
+\text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \underbrace{\mathbb{1}[\text{Depth}(x_i) \leq t]}_{\text{only supervise nodes computable by iteration } t} \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i))
+$$
+              <p><b>Intuition</b>: At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.</p>
+              <p><b>Key Distinction</b>: Unlike CoT which supervises in token space, this supervises directly in latent states, steering internal representations to align with the algorithm's step-by-step execution.</p>
+            </div>
+
+            <div style="background-color: rgba(3, 169, 244, 0.12); padding: 15px; border-left: 5px solid #03A9F4; margin: 20px 0; border-radius: 4px;">
+              <h4>🎲 Mechanism 3: Anchoring Latent Representations via Discretization</h4>
+              <p><b>Motivation</b>: Recurrent models can suffer from representational drift during extended out-of-distribution computation. When processing significantly more iterations than seen during training, continuous representations gradually deviate from the learned manifold, causing performance degradation.</p>
+              <p><b>Implementation</b>: We introduce a discretization mechanism that anchors the model's latent representations. After each recurrent iteration, continuous hidden states are projected into a structured discrete symbolic space with factored components (token syntax, variable identity, operation type, numerical value). These discrete states are then re-embedded to form input for the next iteration.</p>
+              <p><b>The Discrete Space Structure</b> — consider the token sequence $17 = x_{42}$ <code>[sep]</code>:</p>
+              <div style="overflow-x:auto;">
+                <table class="table is-narrow is-striped">
+                  <thead>
+                    <tr>
+                      <th style="text-align:center;">Token</th>
+                      <th style="text-align:center;">→</th>
+                      <th style="text-align:center;">syntax</th>
+                      <th style="text-align:center;">variable</th>
+                      <th style="text-align:center;">operation</th>
+                      <th style="text-align:center;">value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td style="text-align:center;"><code>17</code></td><td style="text-align:center;">→</td><td style="text-align:center;"><code>value</code></td><td style="text-align:center;">N/A</td><td style="text-align:center;">N/A</td><td style="text-align:center;">17</td></tr>
+                    <tr><td style="text-align:center;"><code>=</code></td><td style="text-align:center;">→</td><td style="text-align:center;"><code>=</code></td><td style="text-align:center;">N/A</td><td style="text-align:center;">N/A</td><td style="text-align:center;">N/A</td></tr>
+                    <tr><td style="text-align:center;">$x_{42}$</td><td style="text-align:center;">→</td><td style="text-align:center;"><code>variable</code></td><td style="text-align:center;">$x_{42}$</td><td style="text-align:center;">N/A</td><td style="text-align:center;">empty</td></tr>
+                    <tr><td style="text-align:center;"><code>[sep]</code></td><td style="text-align:center;">→</td><td style="text-align:center;"><code>[sep]</code></td><td style="text-align:center;">N/A</td><td style="text-align:center;">N/A</td><td style="text-align:center;">N/A</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Note that the <code>value</code> factor of variable tokens (e.g., <code>x₄₂</code>) is <code>empty</code> initially. As the model processes recurrently, it iteratively computes values and updates this factor.</p>
+              <p><b>Effect</b>: This discrete bottleneck ensures each iteration operates on representations from a shared, anchored space, preventing drift and enabling stable processing across many iterations.</p>
+            </div>
+
+            <div style="background-color: rgba(233, 30, 99, 0.12); padding: 15px; border-left: 5px solid #E91E63; margin: 20px 0; border-radius: 4px;">
+              <h4>🔧 Mechanism 4: Learning to Self-Correct</h4>
+              <p><b>Motivation</b>: In sequential reasoning, errors at any step can propagate and compromise the entire solution. As problem complexity scales, the likelihood of encountering errors increases, limiting the ability to generalize to more complex instances.</p>
+              <p><b>Implementation</b>: We train the model to detect and correct errors by stochastically corrupting the model's discrete latent states during training. At each recurrent iteration, with small probability, we randomly corrupt value components (e.g., changing a computed value from 15 to 8). This forces the model to learn to:</p>
+              <ol>
+                <li><b>Detect</b> when previously-computed values are incorrect (due to corruption or its own mistakes)</li>
+                <li><b>Correct</b> errors in subsequent steps before proceeding with dependent computations</li>
+              </ol>
+              <p><b>Empirical Finding</b>: The model achieves nearly <b>100% one-step error correction rate</b>. Notably, effective error correction requires <b>deeper models</b> (more layers per recurrent block), as the model must simultaneously identify errors, correct them, and perform the current step's computation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 🚀 Four Mechanisms for Algorithmic Generalization -->
+
+    <!-- Section: 📊 Experimental Results -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">📊 Experimental Results</h2>
+
+            <h3>Enabling Robust Algorithmic OOD Generalization</h3>
+            <div style="display: flex; gap: 20px; align-items: flex-start; margin: 20px 0; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 280px;">
+                <p align="center">
+                  <img src="static/figures/method_ood_comparison_compact.png" alt="Method OOD Comparison" width="100%"/>
+                </p>
+                <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+                  <strong>Figure (a):</strong> OOD generalization across methods. Our full method (red) achieves near-perfect performance even at 4× training size.
+                </p>
+              </div>
+              <div style="flex: 1; min-width: 280px;">
+                <p align="center">
+                  <img src="static/figures/ourmethod_stepwise_results_Blues.png" alt="Stepwise Results" width="100%"/>
+                </p>
+                <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+                  <strong>Figure (b):</strong> Effective OOD generalization via input-adaptive scaling of computation time (Discrete Latent Space Supervision ↻).
+                </p>
+              </div>
+            </div>
+            <p><b>Result</b>: Combining all four mechanisms, our full method (<b>Discrete Latent Space Supervision ↻</b>) achieves <b>near-perfect performance</b> even on graphs 4× larger than training, with accuracy remaining above <b>99.5%</b> at $N=128$.</p>
+
+            <h3>Ablation Analysis: Understanding Each Mechanism's Contribution</h3>
+            <p>Figure (a) above shows a systematic ablation study. By comparing methods that differ in which mechanisms they implement (see the earlier table), we can isolate each mechanism's contribution:</p>
+            <div style="background-color: rgba(33, 150, 243, 0.12); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 5px solid #2196F3; max-width: 900px;">
+              <strong>Key Findings</strong>
+              <ul>
+                <li><strong>Recurrence matters:</strong> Recurrent models improve in-distribution learning versus feedforward ones, but recurrence alone does not enable OOD generalization.</li>
+                <li><strong>Algorithmic supervision is critical:</strong> Chain-of-Thought (token-space supervision) gives limited OOD gains (to ~N ≈ 40). Full latent-space supervision (continuous) extends generalization substantially further.</li>
+                <li><strong>Discretization prevents drift:</strong> Continuous latent supervision degrades on much larger graphs; adding a discrete latent bottleneck (Discrete Latent Space Supervision) yields far greater robustness, retaining high accuracy up to N = 128.</li>
+                <li><strong>Error correction adds robustness:</strong> The complete method (Discrete Latent Space Supervision ↻) with self-correction attains the strongest, near-perfect OOD performance across test sizes.</li>
+              </ul>
+              <p style="margin-top:8px;"><strong>The Synergy Effect:</strong> Each mechanism addresses a distinct failure mode; combined, they produce a robust algorithmic learner whose joint performance exceeds individual contributions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 📊 Experimental Results -->
+
+
+    <!-- Section: 🔬 Mechanistic Interpretability: The Algorithm Learned by the Model -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">🔬 Mechanistic Interpretability: The Algorithm Learned by the Model?</h2>
+            <p>One of the most exciting aspects of our work is that we don't just show <i>that</i> it works—we explain <i>how</i> it works! Through detailed analysis, we reverse-engineer the exact algorithm the model learned.</p>
+            <blockquote>
+              <p><b>🎯 Central Questions:</b></p>
+              <ol>
+                <li>What algorithm does the trained model implement?</li>
+                <li>Why can it generalize to OOD data?</li>
+              </ol>
+            </blockquote>
+
+            <h3>Technical Overview: Analysis Methodology</h3>
+            <p>We employ a systematic approach to analyze each model component (first-layer attention, second-layer attention, final MLP):</p>
+
+            <p><b>1. Relative Variance Analysis</b> — Identifying attention head specialization</p>
+            <p>For each attention head, we measure how changes to specific input variables affect the attention weights. By computing the relative variance of attention patterns when perturbing different variables, we identify which heads specialize in tracking which variable positions ($\mathtt{var}_0$, $\mathtt{var}_1$, $\mathtt{var}_2$, or $\mathtt{rhs}$).</p>
+
+            <p><b>2. Norm Amplification Analysis</b> — Understanding information flow</p>
+            <p>Our discrete latent space has factored components (syntax, variable, operation, value). To understand which information types each attention head copies, we analyze the combined value-output (OV) projection matrix. For each factored embedding type, we measure the operator norm of the subspace projection:</p>
+$$
+\text{Amplification}_{\text{factor}} = \|P_{\text{factor}} \cdot W_O W_V \cdot P_{\text{factor}}\|_{\text{op}}
+$$
+            <p>where $P_{\text{factor}}$ projects onto the embedding subspace for that factor. High amplification indicates that information type is being copied.</p>
+
+            <p><b>3. Frequency Domain Analysis</b> — Decoding arithmetic operations</p>
+            <p>To understand how the MLP performs modular addition, we use 3D Discrete Fourier Transform (DFT) analysis. By varying all three input values and computing the DFT of internal representations, we identify which frequency components are amplified—revealing the MLP's use of periodic functions for modular arithmetic.</p>
+
+            <p><b>4. Controlled Perturbation Experiments</b> — Validating hypotheses</p>
+            <p>We form hypotheses about each component's role, then design controlled experiments that modify specific input elements and trace how these modifications affect internal representations and final outputs.</p>
+
+            <h3>🎯 The Discovered Algorithm: An Induction Head Mechanism</h3>
+            <p>Here's what we found—the model implements an <b>induction head</b> mechanism tailored to the task! Let's break it down step-by-step:</p>
+            <p style="text-align:center;">
+              <img src="static/figures/2-layer-illustrated.png" alt="Complete Mechanism" />
+            </p>
+            <p style="font-style:italic; text-align:center;">The complete computational circuit showing how each layer contributes! 🎨</p>
+
+            <div style="background-color: rgba(156, 39, 176, 0.1); padding: 15px; border-radius: 4px; margin: 20px 0;">
+              <h4>🔍 Layer 1 Attention: Variable Identification</h4>
+              <p><b>What It Does</b>: The first layer's attention heads organize into distinct groups, each specialized for tracking specific variable positions in equations.</p>
+              <p><b>The Grouping Pattern</b>:</p>
+              <ul>
+                <li><b>Heads {4, 8}</b>: Track the first variable ($\mathtt{var}_0$) 🎯</li>
+                <li><b>Heads {5, 12}</b>: Track the second variable ($\mathtt{var}_1$) 🎯</li>
+                <li><b>Heads {3, 7, 11, 14}</b>: Track the third variable ($\mathtt{var}_2$) 🎯</li>
+              </ul>
+              <p><b>Crucial Detail</b>: These heads copy variable <i>identities</i> (not values!) to the position where computation occurs. They're saying: "Remember that we need to look up $x_7$, $x_{42}$, and $x_{88}$"</p>
+            </div>
+
+            <p style="text-align:center;">
+              <img src="static/figures/L0_head_allocation.png" alt="L0 Head Allocation" />
+            </p>
+            <p style="font-style:italic; text-align:center;">First-layer attention heads organize into groups based on which variable position they track. This figure shows the grouping structure discovered through relative variance analysis.</p>
+
+            <p><b>Relative Variance Analysis Results</b> — Each heatmap below shows which attention heads respond strongly when perturbing a specific variable position:</p>
+            <table style="width:100%; border: none;">
+              <tr>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/L0_var_0_relative_variance_heatmap.png" alt="VAR_0" style="width:100%;"/>
+                  <br/>
+                  <b><code>var₀</code> (Heads 4, 8)</b>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/L0_var_1_relative_variance_heatmap.png" alt="VAR_1" style="width:100%;"/>
+                  <br/>
+                  <b><code>var₁</code> (Heads 5, 12)</b>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/L0_var_2_relative_variance_heatmap.png" alt="VAR_2" style="width:100%;"/>
+                  <br/>
+                  <b><code>var₂</code> (Heads 3, 7, 11, 14)</b>
+                </td>
+                <td style="width:25%; text-align:center; border: none; vertical-align: top;">
+                  <img src="static/figures/L0_rhs_relative_variance_heatmap.png" alt="RHS" style="width:100%;"/>
+                  <br/>
+                  <b><code>rhs</code> (result position)</b>
+                </td>
+              </tr>
+            </table>
+            <p><i>Reading the heatmaps: Each row represents an attention head (0-15), and red indicates high relative variance. When we perturb $\mathtt{var}_0$, heads 4 and 8 show strong response (left heatmap). Similarly, each <code>variable</code> position has its dedicated head group. Crucially, look at the $\mathtt{rhs}$ heatmap (rightmost): heads from all groups show activation, because the $\mathtt{rhs}$ position needs information from all <code>variable</code>s.</i></p>
+
+            <p><b>Norm Amplification Analysis</b> — What type of information do these heads copy?</p>
+            <img src="static/figures/L0_ov_operator_norm_mpl.png" alt="L0 OV Norm" style="float: right; width: 25%; margin-left: 20px; margin-bottom: 10px;"/>
+            <p>Operator norm amplification for different factored embedding types across all 16 attention heads. The <code>variable</code> factor (orange) shows dramatically higher amplification than other factors, confirming that first-layer attention heads copy <b><code>variable</code> identities</b> (not <code>value</code>s!) to the $\mathtt{rhs}$ position.</p>
+            <div style="clear: both;"></div>
+
+            <div style="background-color: rgba(76, 175, 80, 0.1); padding: 15px; border-left: 5px solid #4CAF50; margin: 20px 0; border-radius: 4px;">
+              <h4>🎯 Layer 1 MLP: Minimal Processing</h4>
+              <p><b>What We Found</b>: The first MLP makes only minor adjustments to the residual stream (relative $L_2$ error $&lt; 10\%$)!</p>
+              <p><b>Why This Matters</b>: This efficient division of labor focuses computational capacity where it's needed most—primarily in attention for information routing and the final MLP for arithmetic computation.</p>
+            </div>
+
+            <div style="text-align: center;">
+              <img src="static/figures/l2_relative_error.png" alt="L2 Relative Error" />
+              <p style="margin-top:8px; font-style:italic;">
+                Layer 1 MLP contributes minimally—most work happens in attention and the final MLP! 📉
+              </p>
+            </div>
+
+            <div style="background-color: rgba(3, 169, 244, 0.1); padding: 15px; border-left: 5px solid #03A9F4; margin: 20px 0; border-radius: 4px;">
+              <h4>🔄 Layer 2 Attention: Value Retrieval (The Induction Head)</h4>
+              <p><b>What It Does</b>: Now that we know <i>which</i> variables we need, the second layer's attention heads retrieve their <i>values</i>!</p>
+              <p><b>The Induction Head Mechanism</b>:</p>
+              <ol>
+                <li>Use the variable names copied by Layer 1 as <b>queries</b></li>
+                <li>Search through previous equations to find where each variable was first computed</li>
+                <li>Copy the <i>value</i> embeddings from those positions</li>
+              </ol>
+              <p><b>Head Grouping Pattern</b>:</p>
+              <ul>
+                <li><b>Heads {0, 8, 15}</b>: Retrieve value of $\mathtt{var}_0$ 🎯</li>
+                <li><b>Heads {5, 10}</b>: Retrieve value of $\mathtt{var}_1$ 🎯</li>
+                <li><b>Heads {2, 3, 4, 7, 9}</b>: Retrieve value of $\mathtt{var}_2$ 🎯</li>
+              </ul>
+              <p><b>Why "Induction"?</b>: This mirrors the classic "induction head" pattern discovered in language models—using context from earlier in the sequence to copy relevant information forward.</p>
+            </div>
+
+            <p><b>Attention Head Statistics</b> — Quantifying head specialization through relative variance analysis</p>
+            <div style="display: flex; gap: 20px; margin: 20px 0; align-items: flex-start; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 220px;">
+                <img src="static/figures/l1_attention_head_statistics_var0.png" alt="VAR_0_stats" style="width:100%;"/>
+                <p style="text-align: center; margin-top: 8px;"><b><code>var₀</code> relative variance</b></p>
+              </div>
+              <div style="flex: 1; min-width: 220px;">
+                <img src="static/figures/l1_attention_head_statistics_var1.png" alt="VAR_1_stats" style="width:100%;"/>
+                <p style="text-align: center; margin-top: 8px;"><b><code>var₁</code> relative variance</b></p>
+              </div>
+              <div style="flex: 1; min-width: 220px;">
+                <img src="static/figures/l1_attention_head_statistics_var2.png" alt="VAR_2_stats" style="width:100%;"/>
+                <p style="text-align: center; margin-top: 8px;"><b><code>var₂</code> relative variance</b></p>
+              </div>
+            </div>
+
+            <p><b>Norm Amplification Analysis</b> — What type of information is copied?</p>
+            <img src="static/figures/L1_ov_operator_norm.png" alt="L1 OV Operator Norm" style="float: right; width: 25%; margin-left: 20px; margin-bottom: 10px;"/>
+            <p>Operator norm amplification for Layer 2 heads. Unlike Layer 1 (which amplified <code>variable</code> embeddings), Layer 2 heads strongly amplify the <code>value</code> factor, confirming they copy <b>numerical <code>value</code>s</b> (not <code>variable</code> names) from previous equations. This reveals the head specialization: different heads focus on retrieving <code>value</code>s for different <code>variable</code> positions.</p>
+            <div style="clear: both;"></div>
+
+            <div style="background-color: rgba(255, 152, 0, 0.1); padding: 15px; border-left: 5px solid #FF9800; margin: 20px 0; border-radius: 4px;">
+              <h4>🎵 Layer 2 MLP: Modular Addition in Frequency Domain</h4>
+              <p><b>The Setup</b>: By this point, the MLP receives the sum of three transformed value embeddings—one for each variable. Now it needs to compute (x + y + z) mod 23.</p>
+              <p><b>The Discovery</b>: The MLP performs modular arithmetic using a <b>frequency-based mechanism</b>! 🌊</p>
+              <p><b>How It Works</b>:</p>
+              <p>Through 3D Fourier analysis, we observe:</p>
+              <ol>
+                <li><b>Input Stage</b>: Dominated by a bias term $(0,0,0)$ frequency 📍</li>
+                <li><b>Processing</b>: Bias diminishes, diagonal frequencies $(a,a,a)$ amplify 📈</li>
+                <li><b>Output</b>: Strong components of form $\cos(2\pi a(x+y+z)/23)$ and $\sin(2\pi a(x+y+z)/23)$ ✨</li>
+              </ol>
+              <p>The diagonal frequencies $(a,a,a)$ naturally encode the sum $x+y+z$. For example, consider the cosine terms:</p>
+$$
+\cos(2\pi a \cdot x/23) \cdot \cos(2\pi a \cdot y/23) \cdot \cos(2\pi a \cdot z/23)
+$$
+              <p>contains terms with $\cos(2\pi a(x+y+z)/23)$ (via trigonometric product identities). Similar patterns hold for sine functions.</p>
+              <p>The periodic nature of trigonometric functions <b>automatically handles</b> the modulo-23 arithmetic! No explicit mod operation needed—it emerges naturally from the periodic structure. The MLP learns to represent values using combinations of these sine and cosine bases. 🎯</p>
+            </div>
+
+            <p style="text-align:center;"><img src="static/figures/fft_histograms_L1-mlp-preact.png" alt="FFT MLP Preact" /></p>
+            <p style="font-style:italic; text-align:center;">Before MLP: Dominated by bias term (0,0,0 frequency)</p>
+
+            <p style="text-align:center;"><img src="static/figures/fft_histograms_L1-mlp-postact.png" alt="FFT MLP Postact" /></p>
+            <p style="font-style:italic; text-align:center;">During MLP: Bias decreases, diagonal frequencies increase! 🌊</p>
+
+            <p style="text-align:center;"><img src="static/figures/fft_histograms_L1-mlp-output.png" alt="FFT MLP Output" /></p>
+            <p style="font-style:italic; text-align:center;">After MLP: Strong diagonal components encoding the sum! The frequency (a,a,a) represents $\cos(2\pi a(\mathtt{var}_0+\mathtt{var}_1+\mathtt{var}_2)/23)$ 🎵</p>
+
+            <p style="text-align:center;"><img src="static/figures/fft_histograms_decoder-output.png" alt="FFT Decoder Output" /></p>
+            <p style="font-style:italic; text-align:center;">Final output maintains the frequency structure for decoding! 🎯</p>
+
+            <p><b>Interpreting the Frequency Analysis:</b> The progression through these figures reveals the MLP's computational strategy. At the output layer (third figure), we observe strong magnitudes for diagonal frequency components $(a,a,a)$ where $a \in \{1, \ldots, 22\}$. These diagonal frequencies are crucial because they encode the sum: a component with frequency $(a,a,a)$ corresponds to trigonometric functions of $\mathtt{var}_0 + \mathtt{var}_1 + \mathtt{var}_2$. The MLP essentially transforms the input into this frequency-based representation, where the final answer can be directly decoded from these sum-encoding components. This elegant mechanism allows modular arithmetic to emerge naturally from the periodic structure of sine and cosine functions.</p>
+
+            <hr/>
+
+
+            <h3>🎬 The Complete Algorithm: A Step-by-Step Walkthrough</h3>
+            <p>Let's trace through how the model solves a concrete example to see everything working together:</p>
+            <p><b>Given:</b> $x_7 = 15$, $x_{42} = 8$</p>
+            <p><b>Solve:</b> $x_{23} = x_7 + x_{42} = \, ?$</p>
+
+            <div style="background-color: rgba(156, 39, 176, 0.1); padding: 15px; border-radius: 4px; margin: 20px 0;">
+              <p><b>🎯 Step 1 - First Attention Layer (Variable Identification)</b></p>
+              <ul>
+                <li>Head group {4, 8} identifies $x_7$ is in position $\text{VAR}_0$</li>
+                <li>Head group {5, 12} identifies $x_{42}$ is in position $\text{VAR}_1$</li>
+                <li>These heads copy the variable <i>names</i> (not values) to the RHS position</li>
+                <li><b>Output</b>: "We need to compute something involving $x_7$ and $x_{42}$"</li>
+              </ul>
+
+              <p><b>🔄 Step 2 - First MLP (Minor Adjustments)</b></p>
+              <ul>
+                <li>Makes minor adjustments ($&lt; 10\%$ change to residual stream)</li>
+                <li>Primarily normalization, no major computation</li>
+                <li><b>Output</b>: Slightly refined representation</li>
+              </ul>
+
+              <p><b>🔍 Step 3 - Second Attention Layer (Value Retrieval via Induction)</b></p>
+              <ul>
+                <li>Head group {0, 8, 15} searches for where $x_7$ was computed</li>
+                <li>Finds "$x_7 = 15$" in a previous equation</li>
+                <li>Copies the value embedding for $15$</li>
+                <li>Similarly, head group {5, 10} retrieves value $8$ for $x_{42}$</li>
+                <li><b>Output</b>: The RHS position now has embeddings representing values $15$ and $8$</li>
+              </ul>
+
+              <p><b>✨ Step 4 - Second MLP (Modular Addition in Frequency Domain)</b></p>
+              <ul>
+                <li><b>Input</b>: Sum of transformed embeddings for $15$ and $8$</li>
+                <li><b>Internal computation</b>:
+                  <ul>
+                    <li>Represents values as combinations of sin/cos bases</li>
+                    <li>Amplifies frequencies encoding $(15 + 8) = 23$</li>
+                    <li>The periodic structure naturally handles modulo: $23 \bmod 23 = 0$</li>
+                  </ul>
+                </li>
+                <li><b>Output</b>: Representation of $0$ (since $23 \bmod 23 = 0$) ✅</li>
+              </ul>
+
+              <p><b>🔄 Step 5 - Recurrence (For Deeper Dependencies)</b></p>
+              <ul>
+                <li>The process repeats until all node values in the input graph are computed</li>
+                <li>Each iteration traverses the graph one layer deeper</li>
+                <li>The discrete latent bottleneck anchors representations across all iterations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 🔬 Mechanistic Interpretability: The Algorithm Learned by the Model -->
+
+    <!-- Section: 🎓 Conclusion -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths content">
+            <h2 class="title is-3">🎓 Conclusion</h2>
+            <p>Our work demonstrates that transformers can learn genuine algorithms that generalize far beyond their training distribution; but only with the right architectural mechanisms. By integrating <b>recurrence</b>, <b>latent-space supervision</b>, <b>discretization</b>, and <b>self-correction</b>, we give transformers the inductive structure needed for <b>scalable recursive reasoning</b>. These mechanisms transform raw sequence processing into a depth-invariant computational process that adapts its reasoning to problem complexity.</p>
+            <p>The mechanistic analysis reveals an elegant computational structure:</p>
+            <ul>
+              <li><b>Layer 1 attention</b> identifies which variables are needed</li>
+              <li><b>Layer 2 attention</b> retrieves their values via an induction head mechanism</li>
+              <li><b>Final MLP</b> performs modular arithmetic using frequency-domain processing</li>
+              <li><b>Recurrence</b> enables input-adaptive computation that scales to arbitrary problem sizes</li>
+            </ul>
+            <p>This modular, interpretable solution emerges naturally from training with our architectural mechanisms.</p>
+            <p><b>Broader Implication:</b> This study points toward a new paradigm for building reasoning systems—not by scaling model size alone, but by embedding algorithmic priors directly into the architecture. Such designs can bridge the gap between statistical pattern recognition and symbolic computation, paving the way for models that reason robustly far beyond their training domain.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Section: 🎓 Conclusion -->
+
+    <!-- Below are demos from the template. Keep them here commented out for future reference -->
+
+    <!-- Image carousel -->
+    <!--
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                First image description.
+              </h2>
+            </div>
+            <div class="item">
+              <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                Second image description.
+              </h2>
+            </div>
+            <div class="item">
+              <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                Third image description.
+              </h2>
+            </div>
+            <div class="item">
+              <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                Fourth image description.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End image carousel -->
+
+    <!-- Youtube video -->
+    <!--
+    <section class="hero is-small is-light">
+      <div class="hero-body">
+        <div class="container">
+          <h2 class="title is-3">Video Presentation</h2>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+
+              <div class="publication-video">
+                <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0"
+                  allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End youtube video -->
+
+
+    <!-- Video carousel -->
+    <!--
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container">
+          <h2 class="title is-3">Another Carousel</h2>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video1">
+              <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/carousel1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video2">
+              <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/carousel2.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/carousel3.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End video carousel -->
+
+
+    <!-- Paper poster -->
+    <!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+
+      <!~~ TODO: Replace with your poster PDF~~>
+      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+          </iframe>
+
+      </div>
+    </div>
+</section> -->
+    <!--End paper poster -->
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+        <i class="fas fa-copy"></i>
+        <span class="copy-text">Copy</span>
+          </button>
+        </div>
+
+        <pre id="bibtex-code" class="line-numbers"><code>@article{altabaa2025unlocking,
+  title={Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning}, 
+  author={Awni Altabaa and Siyu Chen and John Lafferty and Zhuoran Yang},
+  year={2025},
+  journal={arXiv preprint arXiv:2510.14095},
+  eprint={2510.14095},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  url={https://arxiv.org/abs/2510.14095},
+  }
+</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
+
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+
+              <p>
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                  href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                <!-- You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative -->
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
