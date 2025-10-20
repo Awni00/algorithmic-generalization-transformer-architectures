@@ -37,10 +37,10 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
   <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
-  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:author" content="Awni Altabaa, Siyu Chen, John Lafferty, Zhuoran Yang">
   <meta property="article:section" content="Research">
-  <meta property="article:tag" content="KEYWORD1">
-  <meta property="article:tag" content="KEYWORD2">
+  <!-- <meta property="article:tag" content="KEYWORD1"> -->
+  <!-- <meta property="article:tag" content="KEYWORD2"> -->
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -82,12 +82,13 @@
 
 
   <!-- paper title and authors -->
-  <title>Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning - Awni
-    Altabaa, Siyu Chen, John Lafferty, Zhuoran Yang</title>
+  <title>Recursive Latent Space Reasoning</title>
 
   <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico"> -->
+  <!-- use emoji 🧠 as favicon  -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
 
   <!-- Critical CSS - Load synchronously -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
@@ -445,10 +446,6 @@
               </p>
             </div>
 
-            <div style="background-color: rgba(33, 150, 243, 0.15); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #2196F3; max-width: 800px; text-align: center;">
-              <b>📝 The Task:</b> Given $x_7=20$, $x_{42}=2$, $x_{88} = 6$, $x_{115} =14$, compute $x_{23}$, $x_{91}$, $x_{55}$, $x_{101}$, and $x_{30}$
-            </div>
-
             <h3>Input Representation</h3>
             <p>The computation graph is presented to the model as a <b>token sequence</b>.</p>
             <p><b>Token Vocabulary:</b></p>
@@ -459,18 +456,15 @@
               <li><b>Special tokens</b>: <code>→</code> (assignment), <code>[sep]</code> (separator)</li>
             </ul>
             <p><b>Example Token Sequence for the graph above:</b></p>
-            <div style="background-color: rgba(197, 197, 197, 0.8); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #5e5e5eff; max-width: 800px; text-align: left;">
+            <div style="background-color: rgba(197, 197, 197, 0.17); padding: 15px; margin: 20px auto; border-radius: 8px; border: 2px solid #5e5e5eff; max-width: 800px; text-align: left;">
 $$
 \begin{aligned}
 &\langle 20 \rangle \langle \to \rangle \langle x_7 \rangle [\text{sep}]
  \langle 2 \rangle \langle \to \rangle \langle x_{42} \rangle [\text{sep}]
  \langle 6 \rangle \langle \to \rangle \langle x_{88} \rangle [\text{sep}]
  \langle 14 \rangle \langle \to \rangle \langle x_{115} \rangle [\text{sep}] \\
-&\langle x_7 \rangle \langle + \rangle \langle x_{42} \rangle \langle \to \rangle \langle x_{23} \rangle [\text{sep}] \\
-&\langle x_{42} \rangle \langle + \rangle \langle x_{88} \rangle \langle \to \rangle \langle x_{91} \rangle [\text{sep}] \\
-&\langle x_{88} \rangle \langle \times \rangle \langle x_{115} \rangle \langle \to \rangle \langle x_{55} \rangle [\text{sep}] \\
-&\langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle \langle \to \rangle \langle x_{101} \rangle [\text{sep}] \\
-&\langle x_{91} \rangle \langle - \rangle \langle x_{88} \rangle \langle + \rangle \langle x_{55} \rangle \langle \to \rangle \langle x_{30} \rangle
+&\langle x_7 \rangle \langle + \rangle \langle x_{42} \rangle \langle \to \rangle \langle x_{23} \rangle [\text{sep}] \langle x_{42} \rangle \langle + \rangle \langle x_{88} \rangle \langle \to \rangle \langle x_{91} \rangle [\text{sep}] \langle x_{88} \rangle \langle \times \rangle \langle x_{115} \rangle \langle \to \rangle \langle x_{55} \rangle [\text{sep}] \\
+&\langle x_{23} \rangle \langle \times \rangle \langle x_{91} \rangle \langle \to \rangle \langle x_{101} \rangle [\text{sep}] \langle x_{91} \rangle \langle - \rangle \langle x_{88} \rangle \langle + \rangle \langle x_{55} \rangle \langle \to \rangle \langle x_{30} \rangle
 \end{aligned}
 $$
             </div>
@@ -560,7 +554,7 @@ $$
               </ul>
               <p><b>Key Takeaway:</b> Even CoT—with its explicit step-by-step supervision—learns distribution-specific shortcuts rather than a generalizable algorithm. The token-based linear reasoning format proves brittle and fails to scale.</p>
             </div>
-            <p><b>These failures highlight a clear need for architectural mechanisms that move beyond brittle token-level reasoning towards models that with a native ability to learn algorithms.</b></p>
+            <p><b>These failures highlight a clear need for architectural mechanisms that move beyond brittle token-level reasoning towards models with a native ability to learn algorithms.</b></p>
 
             <h3>🚀 Our Solution: Four Architectural Mechanisms</h3>
             <p>Effective out-of-distribution generalization demands more than memorizing reasoning traces—it requires learning a scalable algorithm that can adapt its computation to the input’s complexity. We identify four key mechanisms that together enable Transformers to learn true algorithmic reasoning:</p>
@@ -662,7 +656,7 @@ $$
 $$
 (E_1^{(t+1)}, \ldots, E_n^{(t+1)}) \gets \mathrm{RecurrentTransformerBlock}(E_1^{(t)}, \ldots, E_n^{(t)}), \quad t = 1, 2, \ldots, T
 $$
-              <p><b>Crucially</b>, the number of recurrent iterations $T$ is <b>not fixed</b>—it <b>adapts to the input</b>. Specifically, $T$ scales linearly with the depth $D$ of the computation graph. This input-adaptive recurrence enables dynamic scaling of computation time to match problem complexity.</p>
+              <p><b>Crucially</b>, the number of recurrent iterations $T$ is <b>not fixed</b>—it <b>adapts to the input complexity</b>. Specifically, $T$ scales linearly with the depth $D$ of the computation graph. This input-adaptive recurrence enables dynamic scaling of computation time to match problem complexity.</p>
               <p><b>Key Advantage</b>: Unlike CoT methods that scale computation by generating progressively longer token sequences, recurrence introduces inductive biases favoring recursive solution structures that are inherently more scalable.</p>
             </div>
 
@@ -673,7 +667,7 @@ $$
 $$
 \text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \underbrace{\mathbb{1}[\text{Depth}(x_i) \leq t]}_{\text{only supervise nodes computable by iteration } t} \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i))
 $$
-              <p><b>Intuition</b>: At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.</p>
+              <p><b>Intuition</b>: The algorithm alignment loss encourages the model to solve the problem iteratively, rather than attempting to solve it all at once. At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.</p>
               <p><b>Key Distinction</b>: Unlike CoT which supervises in token space, this supervises directly in latent states, steering internal representations to align with the algorithm's step-by-step execution.</p>
             </div>
 
@@ -748,7 +742,15 @@ $$
                 </p>
               </div>
             </div>
-            <p><b>Result</b>: Combining all four mechanisms, our full method (<b>Discrete Latent Space Supervision ↻</b>) achieves <b>near-perfect performance</b> even on graphs 4× larger than training, with accuracy remaining above <b>99.5%</b> at $N=128$.</p>
+            <div style="width:100%; max-width:900px; margin: 20px auto; text-align:center;">
+              <div class="l-page">
+                <iframe src="static/figures/best_models_comparison.html" frameborder='0' scrolling='no' height="500px" width="100%" style="border: 1px dashed grey;"></iframe>
+              </div>
+              <p style="font-size:0.9em; margin-top:8px;">
+                <strong>Figure (a) — Interactive:</strong> OOD generalization across methods. Use hover/zoom controls for details.
+              </p>
+            </div>
+            <p><b>Result</b>: Combining all four mechanisms, our full method (<b>Discrete Latent Space Supervision ↻</b>) achieves <b>perfect performance</b> even on graphs 4× larger than training.</p>
 
             <h3>Ablation Analysis: Understanding Each Mechanism's Contribution</h3>
             <p>Figure (a) above shows a systematic ablation study. By comparing methods that differ in which mechanisms they implement (see the earlier table), we can isolate each mechanism's contribution:</p>
@@ -808,7 +810,7 @@ $$
             <p style="text-align:center;">
               <img src="static/figures/2-layer-illustrated.png" alt="Complete Mechanism" />
             </p>
-            <p style="font-style:italic; text-align:center;">The complete computational circuit showing how each layer contributes! 🎨</p>
+            <p style="font-style:italic; text-align:center;">The complete computational circuit showing how each layer contributes 🎨</p>
 
             <div style="background-color: rgba(156, 39, 176, 0.1); padding: 15px; border-radius: 4px; margin: 20px 0;">
               <h4>🔍 Layer 1 Attention: Variable Identification</h4>
@@ -856,21 +858,18 @@ $$
 
             <p><b>Norm Amplification Analysis</b> — What type of information do these heads copy?</p>
             <img src="static/figures/L0_ov_operator_norm_mpl.png" alt="L0 OV Norm" style="float: right; width: 25%; margin-left: 20px; margin-bottom: 10px;"/>
-            <p>Operator norm amplification for different factored embedding types across all 16 attention heads. The <code>variable</code> factor (orange) shows dramatically higher amplification than other factors, confirming that first-layer attention heads copy <b><code>variable</code> identities</b> (not <code>value</code>s!) to the $\mathtt{rhs}$ position.</p>
+            <p>Operator norm amplification for different factored embedding types across all 16 attention heads. The <code>variable</code> factor (orange) shows dramatically higher amplification than other factors, confirming that first-layer attention heads copy <b><code>variable</code> identities</b> (not <code>value</code>s) to the $\mathtt{rhs}$ position.</p>
             <div style="clear: both;"></div>
 
             <div style="background-color: rgba(76, 175, 80, 0.1); padding: 15px; border-left: 5px solid #4CAF50; margin: 20px 0; border-radius: 4px;">
               <h4>🎯 Layer 1 MLP: Minimal Processing</h4>
-              <p><b>What We Found</b>: The first MLP makes only minor adjustments to the residual stream (relative $L_2$ error $&lt; 10\%$)!</p>
-              <p><b>Why This Matters</b>: This efficient division of labor focuses computational capacity where it's needed most—primarily in attention for information routing and the final MLP for arithmetic computation.</p>
+              <p><b>What We Found</b>: The first MLP makes only minor adjustments to the residual stream (relative $L_2$ change $&lt; 10\%$)</p>
+              <p><b>Interpretation</b>: The model discovered an induction head mechanism for solving the task, where the role of the first layer is merely to copy variable identities via attention to be used as the <i>query</i> in the <i>next layer attention</i>. Thus, the first layer MLP does not need to carry out any computation, and is approximately the identity. The arithmetic computation will be carried out by the second layer MLP.</p>
             </div>
 
-            <div style="text-align: center;">
-              <img src="static/figures/l2_relative_error.png" alt="L2 Relative Error" />
-              <p style="margin-top:8px; font-style:italic;">
-                Layer 1 MLP contributes minimally—most work happens in attention and the final MLP! 📉
-              </p>
-            </div>
+            <p style="margin-top:8px; font-style:italic;">
+  Layer 1 MLP contributes minimally—most work happens in attention and the final MLP 📉
+</p>
 
             <div style="background-color: rgba(3, 169, 244, 0.1); padding: 15px; border-left: 5px solid #03A9F4; margin: 20px 0; border-radius: 4px;">
               <h4>🔄 Layer 2 Attention: Value Retrieval (The Induction Head)</h4>
@@ -914,12 +913,12 @@ $$
             <div style="background-color: rgba(255, 152, 0, 0.1); padding: 15px; border-left: 5px solid #FF9800; margin: 20px 0; border-radius: 4px;">
               <h4>🎵 Layer 2 MLP: Modular Addition in Frequency Domain</h4>
               <p><b>The Setup</b>: By this point, the MLP receives the sum of three transformed value embeddings—one for each variable. Now it needs to compute (x + y + z) mod 23.</p>
-              <p><b>The Discovery</b>: The MLP performs modular arithmetic using a <b>frequency-based mechanism</b>! 🌊</p>
+              <p><b>The Discovery</b>: The MLP performs modular arithmetic using a <b>frequency-based mechanism</b> 🌊</p>
               <p><b>How It Works</b>:</p>
               <p>Through 3D Fourier analysis, we observe:</p>
               <ol>
                 <li><b>Input Stage</b>: Dominated by a bias term $(0,0,0)$ frequency 📍</li>
-                <li><b>Processing</b>: Bias diminishes, diagonal frequencies $(a,a,a)$ amplify 📈</li>
+                <li><b> Processing</b>: Bias diminishes, diagonal frequencies $(a,a,a)$ amplify 📈</li>
                 <li><b>Output</b>: Strong components of form $\cos(2\pi a(x+y+z)/23)$ and $\sin(2\pi a(x+y+z)/23)$ ✨</li>
               </ol>
               <p>The diagonal frequencies $(a,a,a)$ naturally encode the sum $x+y+z$. For example, consider the cosine terms:</p>
@@ -934,13 +933,13 @@ $$
             <p style="font-style:italic; text-align:center;">Before MLP: Dominated by bias term (0,0,0 frequency)</p>
 
             <p style="text-align:center;"><img src="static/figures/fft_histograms_L1-mlp-postact.png" alt="FFT MLP Postact" /></p>
-            <p style="font-style:italic; text-align:center;">During MLP: Bias decreases, diagonal frequencies increase! 🌊</p>
+            <p style="font-style:italic; text-align:center;">During MLP: Bias decreases, diagonal frequencies increase 🌊</p>
 
             <p style="text-align:center;"><img src="static/figures/fft_histograms_L1-mlp-output.png" alt="FFT MLP Output" /></p>
-            <p style="font-style:italic; text-align:center;">After MLP: Strong diagonal components encoding the sum! The frequency (a,a,a) represents $\cos(2\pi a(\mathtt{var}_0+\mathtt{var}_1+\mathtt{var}_2)/23)$ 🎵</p>
+            <p style="font-style:italic; text-align:center;">After MLP: Strong diagonal components encoding the sum. The frequency (a,a,a) represents $\cos(2\pi a(\mathtt{var}_0+\mathtt{var}_1+\mathtt{var}_2)/23)$ 🎵</p>
 
             <p style="text-align:center;"><img src="static/figures/fft_histograms_decoder-output.png" alt="FFT Decoder Output" /></p>
-            <p style="font-style:italic; text-align:center;">Final output maintains the frequency structure for decoding! 🎯</p>
+            <p style="font-style:italic; text-align:center;">Final output maintains the frequency structure for decoding 🎯</p>
 
             <p><b>Interpreting the Frequency Analysis:</b> The progression through these figures reveals the MLP's computational strategy. At the output layer (third figure), we observe strong magnitudes for diagonal frequency components $(a,a,a)$ where $a \in \{1, \ldots, 22\}$. These diagonal frequencies are crucial because they encode the sum: a component with frequency $(a,a,a)$ corresponds to trigonometric functions of $\mathtt{var}_0 + \mathtt{var}_1 + \mathtt{var}_2$. The MLP essentially transforms the input into this frequency-based representation, where the final answer can be directly decoded from these sum-encoding components. This elegant mechanism allows modular arithmetic to emerge naturally from the periodic structure of sine and cosine functions.</p>
 
