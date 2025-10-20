@@ -30,13 +30,12 @@
   <meta property="og:description"
     content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
   <!-- TODO: Replace with your actual website URL -->
-  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
-  <!-- TODO: Create a 1200x630px preview image and update path -->
-  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <!-- <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"> -->
+  <meta property="og:image" content="static/images/social_preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
-  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="og:image:alt" content="Unlocking OOD Generalization in Transformers — Preview">
+  <meta property="article:published_time" content="2025-10-15T00:00:00.000Z">
   <meta property="article:author" content="Awni Altabaa, Siyu Chen, John Lafferty, Zhuoran Yang">
   <meta property="article:section" content="Research">
   <!-- <meta property="article:tag" content="KEYWORD1"> -->
@@ -44,28 +43,23 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <!-- TODO: Replace with your lab/institution Twitter handle -->
-  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
-  <!-- TODO: Replace with first author's Twitter handle -->
-  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
-  <!-- TODO: Same as paper title above -->
-  <meta name="twitter:title"
-    content="🧠 Recursive Thinking From Within: How Transformers Learn Algorithms Through Latent Space Reasoning">
-  <!-- TODO: Same as description above -->
-  <meta name="twitter:description"
-    content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
-  <!-- TODO: Same as social preview image above -->
-  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+  <!-- Unknown handles removed to avoid placeholders -->
+  <!-- <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE"> -->
+  <!-- <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE"> -->
+  <meta name="twitter:title" content="Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning">
+  <meta name="twitter:description" content="Can transformers truly learn algorithms, or do they merely memorize patterns? We show that standard transformers fail to generalize beyond their training distribution on algorithmic tasks. However, by introducing four key mechanisms—recurrence, algorithmic supervision, discrete latent spaces, and error correction—we enable transformers to develop genuine algorithmic reasoning that generalizes to problems 4× larger than those seen during training. Through detailed mechanistic analysis, we reveal exactly how transformer components orchestrate to solve modular arithmetic problems algorithmically.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="Unlocking OOD Generalization in Transformers — Preview">
 
   <!-- Academic/Research Specific -->
-  <meta name="citation_title"
-    content="🧠 Recursive Thinking From Within: How Transformers Learn Algorithms Through Latent Space Reasoning">
-  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
-  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
-  <meta name="citation_publication_date" content="2024">
-  <meta name="citation_conference_title" content="CONFERENCE_NAME">
-  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+  <meta name="citation_title" content="Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning">
+  <meta name="citation_author" content="Altabaa, Awni">
+  <meta name="citation_author" content="Chen, Siyu">
+  <meta name="citation_author" content="Lafferty, John">
+  <meta name="citation_author" content="Yang, Zhuoran">
+  <meta name="citation_publication_date" content="2025">
+  <meta name="citation_conference_title" content="arXiv">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2510.14095.pdf">
 
   <!-- Additional SEO -->
   <meta name="theme-color" content="#2563eb">
@@ -188,30 +182,29 @@
       }
     ],
     "datePublished": "2025-10-15",
-    "publisher": {
-      "@type": "Organization",
-      "name": "CONFERENCE_OR_JOURNAL_NAME"
-    },
-    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
-    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
-    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
-    "abstract": "FULL_ABSTRACT_TEXT_HERE",
-    "citation": "BIBTEX_CITATION_HERE",
+    "publisher": { "@type": "Organization", "name": "arXiv" },
+    "url": "https://arxiv.org/abs/2510.14095",
+    "image": "static/images/social_preview.png",
+    "keywords": [
+      "algorithmic generalization",
+      "transformers",
+      "recurrence",
+      "latent space reasoning",
+      "modular arithmetic",
+      "discrete representations",
+      "error correction",
+      "mechanistic interpretability",
+      "adaptive computation",
+      "algorithmic supervision"
+    ],
+    "abstract": "Systematic, compositional generalization beyond the training distribution remains a core challenge in machine learning—and a critical bottleneck for the emergent reasoning abilities of modern language models. This work investigates out-of-distribution (OOD) generalization in Transformer networks using a GSM8K-style modular arithmetic on computational graphs task as a testbed. We introduce and explore a set of four architectural mechanisms aimed at enhancing OOD generalization: (i) input-adaptive recurrence; (ii) algorithmic supervision; (iii) anchored latent representations via a discrete bottleneck; and (iv) an explicit error-correction mechanism. Collectively, these mechanisms yield an architectural approach for native and scalable latent space reasoning in Transformer networks with robust algorithmic generalization capabilities. We complement these empirical results with a detailed mechanistic interpretability analysis that reveals how these mechanisms give rise to robust OOD generalization abilities.",
+    "citation": "@article{altabaa2025unlocking,\n  title={Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning},\n  author={Awni Altabaa and Siyu Chen and John Lafferty and Zhuoran Yang},\n  year={2025},\n  journal={arXiv preprint arXiv:2510.14095},\n  eprint={2510.14095},\n  archivePrefix={arXiv},\n  primaryClass={cs.LG},\n  url={https://arxiv.org/abs/2510.14095},\n  }",
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/",
-    "mainEntity": {
-      "@type": "WebPage",
-      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
-    },
+    "mainEntity": { "@type": "WebPage", "@id": "https://arxiv.org/abs/2510.14095" },
     "about": [
-      {
-        "@type": "Thing",
-        "name": "RESEARCH_AREA_1"
-      },
-      {
-        "@type": "Thing",
-        "name": "RESEARCH_AREA_2"
-      }
+      { "@type": "Thing", "name": "Transformers" },
+      { "@type": "Thing", "name": "Algorithmic generalization" }
     ]
   }
   </script>
@@ -221,12 +214,11 @@
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "INSTITUTION_OR_LAB_NAME",
-    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
-    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "name": "Yale University",
+    <!-- "url": "https://www.yale.edu",
+    "logo": "static/images/favicon.ico", -->
     "sameAs": [
-      "https://twitter.com/YOUR_TWITTER_HANDLE",
-      "https://github.com/YOUR_GITHUB_USERNAME"
+      "https://github.com/Awni00"
     ]
   }
   </script>
@@ -724,6 +716,15 @@ $$
             <h2 class="title is-3">📊 Experimental Results</h2>
 
             <h3>Enabling Robust Algorithmic OOD Generalization</h3>
+            <div style="text-align:center">
+              <img src="static/figures/ourmethod_stepwise_results_large_Blues.svg" width="100%" alt="Stepwise Results" />
+              <p style="margin-top:8px; font-style:italic; text-align:center;">
+                Effective OOD generalization via input-adaptive scaling of computation time.
+              </p>
+            </div>
+
+            <!--
+            Original static images (kept for reference)
             <div style="display: flex; gap: 20px; align-items: flex-start; margin: 20px 0; flex-wrap: wrap;">
               <div style="flex: 1; min-width: 280px;">
                 <p align="center">
@@ -742,18 +743,35 @@ $$
                 </p>
               </div>
             </div>
-            <div style="width:100%; max-width:900px; margin: 20px auto; text-align:center;">
-              <div class="l-page">
-                <iframe src="static/figures/best_models_comparison.html" frameborder='0' scrolling='no' height="500px" width="100%" style="border: 1px dashed grey;"></iframe>
+            -->
+
+            <!-- <div class="container" style="margin: 20px 0;">
+              <div id="ood-results-carousel" class="carousel results-carousel">
+                <div class="item">
+                  <img src="static/figures/method_ood_comparison_compact.png" alt="Method OOD Comparison" />
+                  <h2 class="subtitle has-text-centered" style="margin-top: 10px; font-size: 0.9em;">
+                    <strong>Figure (a):</strong> OOD generalization across methods. Our full method (red) achieves near-perfect performance even at 4× training size.
+                  </h2>
+                </div>
+                <div class="item">
+                  <img src="static/figures/ourmethod_stepwise_results_Blues.png" alt="Stepwise Results" />
+                  <h2 class="subtitle has-text-centered" style="margin-top: 10px; font-size: 0.9em;">
+                    <strong>Figure (b):</strong> Effective OOD generalization via input-adaptive scaling of computation time (Discrete Latent Space Supervision ↻).
+                  </h2>
+                </div>
               </div>
-              <p style="font-size:0.9em; margin-top:8px;">
-                <strong>Figure (a) — Interactive:</strong> OOD generalization across methods. Use hover/zoom controls for details.
-              </p>
-            </div>
-            <p><b>Result</b>: Combining all four mechanisms, our full method (<b>Discrete Latent Space Supervision ↻</b>) achieves <b>perfect performance</b> even on graphs 4× larger than training.</p>
+            </div> -->
+
+            <p><b>Result</b>: Combining all four mechanisms, our full method (<b>Discrete Latent Space Supervision ↻</b>) achieves <b>perfect performance</b> even on graphs 4× larger than training by scaling computation time through recurrence.</p>
 
             <h3>Ablation Analysis: Understanding Each Mechanism's Contribution</h3>
-            <p>Figure (a) above shows a systematic ablation study. By comparing methods that differ in which mechanisms they implement (see the earlier table), we can isolate each mechanism's contribution:</p>
+            <div style="text-align:center">
+              <img src="static/figures/method_ood_comparison_large_legendtop.svg" width="100%" alt="Stepwise Results" />
+              <p style="margin-top:8px; font-style:italic; text-align:center;">
+                OOD generalization across methods.
+              </p>
+            </div>
+            <p>The Figure above shows a systematic ablation study. By comparing methods that differ in which mechanisms they implement (see the earlier table), we can isolate each mechanism's contribution:</p>
             <div style="background-color: rgba(33, 150, 243, 0.12); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 5px solid #2196F3; max-width: 900px;">
               <strong>Key Findings</strong>
               <ul>
