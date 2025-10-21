@@ -656,8 +656,9 @@ $$
               <h4>🎯 Mechanism 2: Latent State Algorithmic Supervision</h4>
               <p><b>Motivation</b>: While recurrence provides capacity for iterative computation, it does not inherently guarantee that the model learns the desired layer-by-layer algorithmic procedure.</p>
               <p><b>Implementation</b>: We provide supervision directly within the model's latent representation space at each recurrent step. At iteration $t$, a shared linear readout layer predicts node values from latent embeddings $E_i^{(t)}$. The training loss is:</p>
+              <!-- \text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \underbrace{\mathbb{1}[\text{Depth}(x_i) \leq t]}_{\text{only supervise nodes computable by iteration } t} \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i)) -->
 $$
-\text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \underbrace{\mathbb{1}[\text{Depth}(x_i) \leq t]}_{\text{only supervise nodes computable by iteration } t} \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i))
+\text{AlgorithmAlignmentLoss} = \sum_{t=1}^{T} \sum_{i} \mathbb{1}[\text{Depth}(x_i) \leq t] \cdot \ell(W_{\text{value}} \cdot E_i^{(t)}, \text{Value}(x_i))
 $$
               <p><b>Intuition</b>: The algorithm alignment loss encourages the model to solve the problem iteratively, rather than attempting to solve it all at once. At iteration $t$, the layer-by-layer algorithm should have computed all nodes at depth $\leq t$. The indicator $\mathbb{1}[\text{Depth}(x_i) \leq t]$ ensures we only supervise those nodes—if $\text{Depth}(x_i) \leq t$, the value should already be known by iteration $t$, so we train the embedding $E_i^{(t)}$ to correctly predict $\text{Value} (x_i)$.</p>
               <p><b>Key Distinction</b>: Unlike CoT which supervises in token space, this supervises directly in latent states, steering internal representations to align with the algorithm's step-by-step execution.</p>
